@@ -30,7 +30,7 @@ export function AppSidebar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSidebarOpen(false)}
+            /*onClick={() => setSidebarOpen(false)}*/
             className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
           />
         )}
@@ -48,7 +48,9 @@ export function AppSidebar() {
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-4 md:hidden">
               <h2 className="text-lg font-semibold">Menu</h2>
-              <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
+              <Button variant="ghost" size="icon" onClick={() => 
+                console.log("Has clicado aqui")
+                /*setSidebarOpen(false) */}>
                 <X className="h-5 w-5" />
                 <span className="sr-only">Close sidebar</span>
               </Button>
@@ -61,7 +63,7 @@ export function AppSidebar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={() => setSidebarOpen(false)}
+                    /*onClick={() => setSidebarOpen(false)} */
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                       isActive
