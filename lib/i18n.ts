@@ -1,0 +1,480 @@
+"use client"
+
+import { useStore } from "./store"
+
+export type Language = "en" | "es"
+
+export const translations = {
+  en: {
+    // Common
+    common: {
+      loading: "Loading...",
+      save: "Save",
+      cancel: "Cancel",
+      delete: "Delete",
+      edit: "Edit",
+      create: "Create",
+      search: "Search",
+      filter: "Filter",
+      close: "Close",
+      submit: "Submit",
+      back: "Back",
+      next: "Next",
+      previous: "Previous",
+      all: "All",
+    },
+
+    // Navigation
+    nav: {
+      dashboard: "Dashboard",
+      tasks: "Tasks",
+      energy: "Energy",
+      recommendations: "Recommendations",
+      settings: "Settings",
+      profile: "Profile",
+      logout: "Log out",
+    },
+
+    // Auth
+    auth: {
+      login: "Log in",
+      register: "Sign up",
+      email: "Email",
+      password: "Password",
+      name: "Full Name",
+      confirmPassword: "Confirm Password",
+      forgotPassword: "Forgot password?",
+      noAccount: "Don't have an account?",
+      hasAccount: "Already have an account?",
+      signUpHere: "Sign up here",
+      loginHere: "Log in here",
+      loginSuccess: "Login successful!",
+      registerSuccess: "Registration successful!",
+      welcomeBack: "Welcome back to",
+      getStarted: "Get started with",
+      manageTasksIntelligently: "Manage your tasks intelligently with AI-powered recommendations",
+    },
+
+    // Dashboard
+    dashboard: {
+      welcome: "Welcome back",
+      overview: "Overview",
+      completedTasks: "Completed Tasks",
+      activeTasks: "Active Tasks",
+      totalTasks: "Total Tasks",
+      avgEnergy: "Avg Energy",
+      priorityTasks: "Priority Tasks",
+      energyTrends: "Energy Trends",
+      dailyRecommendation: "Daily Recommendation",
+      viewAll: "View all",
+      noTasks: "No priority tasks for today",
+      aiSuggests: "AI suggests:",
+      confidence: "Confidence",
+      manageTasksAndProgress: "Manage your tasks and track progress",
+      thisWeek: "This Week",
+    },
+
+    // Tasks
+    tasks: {
+      title: "Tasks",
+      createTask: "Create Task",
+      editTask: "Edit Task",
+      newTask: "New Task",
+      taskName: "Task name",
+      description: "Description",
+      category: "Category",
+      priority: "Priority",
+      status: "Status",
+      deadline: "Deadline",
+      estimatedTime: "Estimated time (hours)",
+      urgency: "Urgency",
+      impact: "Impact",
+      energyRequired: "Energy Required",
+      high: "High",
+      medium: "Medium",
+      low: "Low",
+      pending: "Pending",
+      inProgress: "In Progress",
+      completed: "Completed",
+      postponed: "Postponed",
+      all: "All",
+      filterByStatus: "Filter by status",
+      filterByPriority: "Filter by priority",
+      startTask: "Start task",
+      completeTask: "Mark Complete",
+      deleteTask: "Delete task",
+      deleteConfirm: "Are you sure you want to delete this task?",
+      editTask: "Edit task",
+      noTasksFound: "No tasks found",
+      createTaskToStart: "Create a new task to get started",
+      score: "Score",
+      aiPriorityCalculation: "AI Priority Calculation",
+      aiPriorityDesc:
+        "Based on urgency, impact, and deadline, this task will be assigned a priority score automatically",
+    },
+
+    // Energy
+    energy: {
+      title: "Energy Tracking",
+      subtitle: "Track your energy levels to receive better task recommendations",
+      logEnergyLevel: "Log Your Energy Level",
+      howAreYouFeeling: "How are you feeling right now?",
+      lowEnergy: "Low Energy",
+      mediumEnergy: "Medium Energy",
+      highEnergy: "High Energy",
+      currentMood: "Current Mood (optional)",
+      moodPlaceholder: "e.g., Focused, Tired, Motivated...",
+      notes: "Notes (optional)",
+      notesPlaceholder: "Add any additional notes about your energy level...",
+      logSuccess: "Energy level logged successfully!",
+      logEnergyLevel: "Log Energy Level",
+      aiInsights: "AI Insights",
+      weeklyTrend: "Weekly Trend",
+      trendUp: "Your energy levels are improving! Keep up the great work.",
+      trendDown: "Your energy seems lower recently. Consider taking breaks and prioritizing rest.",
+      trendStable: "Your energy levels are stable. Maintain your current routine.",
+      recommendation: "Recommendation",
+      recommendationHigh: "You have high energy! This is a great time to tackle challenging tasks.",
+      recommendationMedium: "Your energy is moderate. Focus on medium-priority tasks and take regular breaks.",
+      recommendationLow: "Your energy is low. Prioritize rest and focus only on essential tasks.",
+      avgEnergy: "Avg Energy",
+      totalLogs: "Total Logs",
+      highDays: "High Days",
+      energyHistory: "Energy History",
+      noLogsYet: "No energy logs yet. Start tracking your energy levels!",
+      mood: "Mood",
+      thisWeek: "This Week",
+    },
+
+    // Recommendations
+    recommendations: {
+      title: "AI Recommendations",
+      subtitle: "Get personalized task recommendations powered by AI",
+      dailyRecommendation: "Daily Recommendation",
+      confidence: "match",
+      whyThisTask: "Why this task?",
+      accept: "Accept",
+      reject: "Reject",
+      pending: "Pending",
+      accepted: "Accepted",
+      rejected: "Rejected",
+      postponed: "Postponed",
+      yourStats: "Your Stats",
+      total: "Total",
+      acceptanceRate: "Acceptance Rate",
+      completionRate: "Completion Rate",
+      howItWorks: "How It Works",
+      howItWorksDesc:
+        "Our AI analyzes your task priorities, energy patterns, and historical performance to generate personalized daily recommendations.",
+      keyFactors: "Key Factors",
+      factor1: "Task priority and urgency",
+      factor2: "Your current energy levels",
+      factor3: "Time of day and patterns",
+      factor4: "Historical task completion",
+      recommendationHistory: "Recommendation History",
+      noHistoryYet: "No recommendation history yet",
+      completed: "Completed",
+      notCompleted: "Not completed",
+    },
+
+    // Settings
+    settings: {
+      title: "Settings",
+      general: "General",
+      appearance: "Appearance",
+      notifications: "Notifications",
+      account: "Account",
+    },
+
+    // Theme
+    theme: {
+      light: "Light",
+      dark: "Dark",
+      toggleTheme: "Toggle theme",
+    },
+
+    // Language
+    language: {
+      title: "Language",
+      english: "English",
+      spanish: "Spanish",
+      selectLanguage: "Select language",
+    },
+  },
+
+  es: {
+    // Common
+    common: {
+      loading: "Cargando...",
+      save: "Guardar",
+      cancel: "Cancelar",
+      delete: "Eliminar",
+      edit: "Editar",
+      create: "Crear",
+      search: "Buscar",
+      filter: "Filtrar",
+      close: "Cerrar",
+      submit: "Enviar",
+      back: "Atrás",
+      next: "Siguiente",
+      previous: "Anterior",
+      all: "Todas",
+    },
+
+    // Navigation
+    nav: {
+      dashboard: "Tablero",
+      tasks: "Tareas",
+      energy: "Energía",
+      recommendations: "Recomendaciones",
+      settings: "Configuración",
+      profile: "Perfil",
+      logout: "Cerrar sesión",
+    },
+
+    // Auth
+    auth: {
+      login: "Iniciar sesión",
+      register: "Registrarse",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      name: "Nombre completo",
+      confirmPassword: "Confirmar contraseña",
+      forgotPassword: "¿Olvidaste tu contraseña?",
+      noAccount: "¿No tienes una cuenta?",
+      hasAccount: "¿Ya tienes una cuenta?",
+      signUpHere: "Regístrate aquí",
+      loginHere: "Inicia sesión aquí",
+      loginSuccess: "Inicio de sesión exitoso",
+      registerSuccess: "Registro exitoso",
+      welcomeBack: "Bienvenido de nuevo a",
+      getStarted: "Comienza con",
+      manageTasksIntelligently: "Gestiona tus tareas de forma inteligente con recomendaciones impulsadas por IA",
+    },
+
+    // Dashboard
+    dashboard: {
+      welcome: "Bienvenido de nuevo",
+      overview: "Resumen",
+      completedTasks: "Tareas Completadas",
+      activeTasks: "Tareas Activas",
+      totalTasks: "Total de Tareas",
+      avgEnergy: "Energía Promedio",
+      priorityTasks: "Tareas Prioritarias",
+      energyTrends: "Tendencias de Energía",
+      dailyRecommendation: "Recomendación Diaria",
+      viewAll: "Ver todas",
+      noTasks: "No hay tareas prioritarias para hoy",
+      aiSuggests: "La IA sugiere:",
+      confidence: "Confianza",
+      manageTasksAndProgress: "Gestiona tus tareas y sigue tu progreso",
+      thisWeek: "Esta Semana",
+    },
+
+    // Tasks
+    tasks: {
+      title: "Tareas",
+      createTask: "Crear Tarea",
+      editTask: "Editar Tarea",
+      newTask: "Nueva Tarea",
+      taskName: "Nombre de la tarea",
+      description: "Descripción",
+      category: "Categoría",
+      priority: "Prioridad",
+      status: "Estado",
+      deadline: "Fecha límite",
+      estimatedTime: "Tiempo estimado (horas)",
+      urgency: "Urgencia",
+      impact: "Impacto",
+      energyRequired: "Energía Requerida",
+      high: "Alta",
+      medium: "Media",
+      low: "Baja",
+      pending: "Pendiente",
+      inProgress: "En Progreso",
+      completed: "Completada",
+      postponed: "Pospuesta",
+      all: "Todas",
+      filterByStatus: "Filtrar por estado",
+      filterByPriority: "Filtrar por prioridad",
+      startTask: "Iniciar tarea",
+      completeTask: "Marcar como Completa",
+      deleteTask: "Eliminar tarea",
+      deleteConfirm: "¿Estás seguro de que quieres eliminar esta tarea?",
+      editTask: "Editar tarea",
+      noTasksFound: "No se encontraron tareas",
+      createTaskToStart: "Crea una nueva tarea para comenzar",
+      score: "Puntaje",
+      aiPriorityCalculation: "Cálculo de Prioridad IA",
+      aiPriorityDesc:
+        "Basado en urgencia, impacto y fecha límite, esta tarea recibirá un puntaje de prioridad automáticamente",
+    },
+
+    // Energy
+    energy: {
+      title: "Seguimiento de Energía",
+      subtitle: "Rastrea tus niveles de energía para recibir mejores recomendaciones de tareas",
+      logEnergyLevel: "Registra tu Nivel de Energía",
+      howAreYouFeeling: "¿Cómo te sientes en este momento?",
+      lowEnergy: "Energía Baja",
+      mediumEnergy: "Energía Media",
+      highEnergy: "Energía Alta",
+      currentMood: "Estado de Ánimo Actual (opcional)",
+      moodPlaceholder: "ej., Concentrado, Cansado, Motivado...",
+      notes: "Notas (opcional)",
+      notesPlaceholder: "Agrega notas adicionales sobre tu nivel de energía...",
+      logSuccess: "¡Nivel de energía registrado exitosamente!",
+      logEnergyLevel: "Registrar Nivel de Energía",
+      aiInsights: "Insights de IA",
+      weeklyTrend: "Tendencia Semanal",
+      trendUp: "¡Tus niveles de energía están mejorando! Sigue así.",
+      trendDown: "Tu energía parece más baja recientemente. Considera tomar descansos y priorizar el descanso.",
+      trendStable: "Tus niveles de energía son estables. Mantén tu rutina actual.",
+      recommendation: "Recomendación",
+      recommendationHigh: "¡Tienes mucha energía! Este es un buen momento para abordar tareas desafiantes.",
+      recommendationMedium:
+        "Tu energía es moderada. Concéntrate en tareas de prioridad media y toma descansos regulares.",
+      recommendationLow: "Tu energía es baja. Prioriza el descanso y concéntrate solo en tareas esenciales.",
+      avgEnergy: "Energía Promedio",
+      totalLogs: "Registros Totales",
+      highDays: "Días Altos",
+      energyHistory: "Historial de Energía",
+      noLogsYet: "No hay registros de energía todavía. ¡Comienza a rastrear tus niveles de energía!",
+      mood: "Estado de Ánimo",
+      thisWeek: "Esta Semana",
+    },
+
+    // Recommendations
+    recommendations: {
+      title: "Recomendaciones de IA",
+      subtitle: "Obtén recomendaciones de tareas personalizadas impulsadas por IA",
+      dailyRecommendation: "Recomendación Diaria",
+      confidence: "coincidencia",
+      whyThisTask: "¿Por qué esta tarea?",
+      accept: "Aceptar",
+      reject: "Rechazar",
+      pending: "Pendiente",
+      accepted: "Aceptada",
+      rejected: "Rechazada",
+      postponed: "Pospuesta",
+      yourStats: "Tus Estadísticas",
+      total: "Total",
+      acceptanceRate: "Tasa de Aceptación",
+      completionRate: "Tasa de Completación",
+      howItWorks: "Cómo Funciona",
+      howItWorksDesc:
+        "Nuestra IA analiza las prioridades de tus tareas, patrones de energía y rendimiento histórico para generar recomendaciones diarias personalizadas.",
+      keyFactors: "Factores Clave",
+      factor1: "Prioridad y urgencia de la tarea",
+      factor2: "Tus niveles de energía actuales",
+      factor3: "Hora del día y patrones",
+      factor4: "Historial de completación de tareas",
+      recommendationHistory: "Historial de Recomendaciones",
+      noHistoryYet: "No hay historial de recomendaciones todavía",
+      completed: "Completada",
+      notCompleted: "No completada",
+    },
+
+    // Settings
+    settings: {
+      title: "Configuración",
+      general: "General",
+      appearance: "Apariencia",
+      notifications: "Notificaciones",
+      account: "Cuenta",
+    },
+
+    // Theme
+    theme: {
+      light: "Claro",
+      dark: "Oscuro",
+      toggleTheme: "Cambiar tema",
+    },
+
+    // Language
+    language: {
+      title: "Idioma",
+      english: "Inglés",
+      spanish: "Español",
+      selectLanguage: "Seleccionar idioma",
+    },
+  },
+}
+
+// This ensures filters work correctly when switching languages
+export const categoryMappings = {
+  en: {
+    high: "high",
+    medium: "medium",
+    low: "low",
+    pending: "pending",
+    inProgress: "in_progress",
+    completed: "completed",
+    postponed: "postponed",
+    accepted: "accepted",
+    rejected: "rejected",
+  },
+  es: {
+    alta: "high",
+    media: "medium",
+    baja: "low",
+    pendiente: "pending",
+    enProgreso: "in_progress",
+    completada: "completed",
+    pospuesta: "postponed",
+    aceptada: "accepted",
+    rechazada: "rejected",
+  },
+}
+
+// Reverse mappings: from English key to translated display value
+export const reverseMappings = {
+  en: {
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+    pending: "Pending",
+    in_progress: "In Progress",
+    completed: "Completed",
+    postponed: "Postponed",
+    accepted: "Accepted",
+    rejected: "Rejected",
+  },
+  es: {
+    high: "Alta",
+    medium: "Media",
+    low: "Baja",
+    pending: "Pendiente",
+    in_progress: "En Progreso",
+    completed: "Completada",
+    postponed: "Pospuesta",
+    accepted: "Aceptada",
+    rejected: "Rechazada",
+  },
+}
+
+export function useTranslation() {
+  const language = useStore((state) => state.language)
+  return translations[language]
+}
+
+export function useLanguage() {
+  const language = useStore((state) => state.language)
+  return language
+}
+
+// Helper to get translated value for status/priority/etc
+export function getTranslatedValue(key: string, language: Language = "en"): string {
+  return reverseMappings[language][key as keyof typeof reverseMappings.en] || key
+}
+
+// Helper to get original English key from translated value
+export function getEnglishKey(translatedValue: string, language: Language = "es"): string {
+  if (language === "en") return translatedValue.toLowerCase().replace(" ", "_")
+
+  const mapping = Object.entries(reverseMappings.es).find(
+    ([_, value]) => value.toLowerCase() === translatedValue.toLowerCase(),
+  )
+
+  return mapping ? mapping[0] : translatedValue
+}
