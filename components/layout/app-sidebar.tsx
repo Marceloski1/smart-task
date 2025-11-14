@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation"
 import { LayoutDashboard, CheckSquare, Battery, Sparkles, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslation } from "@/lib/i18n"
+import { useState } from "react"
 
 export function AppSidebar() {
   const { sidebarOpen, setSidebarOpen } = useStore()
