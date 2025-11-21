@@ -24,20 +24,7 @@ export function AppSidebar() {
 
   return (
     <>
-      {/* Mobile backdrop */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSidebarOpen(false)}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
-          />
-
-        )}
-      </AnimatePresence>
-
+    
       {/* Sidebar */}
       <AnimatePresence mode="wait">
         {sidebarOpen && (
@@ -50,11 +37,10 @@ export function AppSidebar() {
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-4 md:hidden">
               <h2 className="text-lg font-semibold">Menu</h2>
-              <Button variant="ghost" size="icon" onClick={() =>{
+              <Button variant="ghost" size="icon" className="relative z-100" onClick={() =>{
                 console.log("Has clicado aqui")
                 setSidebarOpen(false)}}>
                 <X className="h-5 w-5" />
-                <span className="sr-only">Close sidebar</span>
               </Button>
             </div>
 
