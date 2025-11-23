@@ -2,13 +2,13 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { useStore } from "@/lib/store"
+import { AuthService } from "@/service/auth.service"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { mockUser } from "@/lib/mock-data"
 import { useTranslation } from "@/lib/i18n"
 
 export function RegisterForm() {
@@ -18,10 +18,10 @@ export function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
-  const setUser = useStore((state) => state.setUser)
   const t = useTranslation()
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setSuccess(false)
@@ -40,28 +40,23 @@ export function RegisterForm() {
       setError("Password must be at least 6 characters")
       return
     }
+    
+    try {
+      const user = await AuthService.register( { 
+        name:name, 
+        email:email, 
+        password:password 
+      })
+      setSuccess(true)
 
-    // Mock registration - in real app this would call API
-    const newUser = {
-      ...mockUser,
-      id: crypto.randomUUID(),
-      email,
-      name,
-      created_at: new Date(),
-      updated_at: new Date(),
-      last_login: new Date(),
+      // Redirect to dashboard after success
+      setTimeout(() => {
+        router.push("/dashboard")
+      }, 1000)
+    } catch (err: any) {
+      const message = err?.message || "Registration failed"
+      setError(String(message))
     }
-
-    setUser(newUser)
-    setSuccess(true)
-
-    // Reset form
-    setTimeout(() => {
-      setName("")
-      setEmail("")
-      setPassword("")
-      setConfirmPassword("")
-    }, 1500)
   }
 
   return (
@@ -124,7 +119,7 @@ export function RegisterForm() {
                 required
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-2">
               <Label htmlFor="confirm-password">{t.auth.confirmPassword}</Label>
               <Input
                 id="confirm-password"

@@ -3,36 +3,43 @@
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { useStore } from "@/lib/store"
+import { useAuthStore } from "@/lib/store/auth-store"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useTranslation } from "@/lib/i18n"
 
+
 export function LoginForm() {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const login = useStore((state) => state.login)
+  const login = useAuthStore((s) => s.login)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
   const t = useTranslation()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+  const router = useRouter()
 
-    if (!email || !password) {
-      setError("Please fill in all fields")
-      return
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setError("")
 
-    // Mock login validation
-    if (email === "demo@smarttask.com" && password === "demo") {
-      login(email, password)
-    } else {
-      setError("Invalid credentials. Try demo@smarttask.com / demo")
-    }
+  if (!username || !password) {
+    setError("Please fill in all fields")
+    return
   }
+
+  try {
+    const user = await login(username, password) 
+    router.push("/dashboard")
+  } catch (err: any) {
+    const message = err?.message || "Login failed"
+    setError(String(message))
+  }
+}
+
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
@@ -58,9 +65,10 @@ export function LoginForm() {
                 id="email"
                 type="email"
                 placeholder="demo@smarttask.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
+               
               />
             </div>
             <div className="space-y-2">
@@ -74,7 +82,7 @@ export function LoginForm() {
                 required
               />
             </div>
-            <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
+            <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground m-2">
               <p className="font-medium text-foreground">Demo credentials:</p>
               <p>Email: demo@smarttask.com</p>
               <p>Password: demo</p>
