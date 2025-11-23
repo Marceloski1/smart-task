@@ -7,6 +7,8 @@
 .env
 .env.local
 .env.development.local
+
+# allow example env
 !.env.example
 
 # next.js
@@ -22,8 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
-.env*
 
 # vercel
 .vercel
