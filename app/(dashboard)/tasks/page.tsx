@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ProtectedLayout } from "@/components/layout/protected-layout"
 import { TaskFilters } from "@/components/tasks/task-filters"
@@ -11,9 +11,11 @@ import { useStore } from "@/lib/store"
 import type { Task, TaskStatus, PriorityLevel } from "@/lib/types"
 import { Plus } from "lucide-react"
 import { useTranslation } from "@/lib/i18n"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
 
 export default function TasksPage() {
-  const { tasks } = useStore()
+  const tasks = useTaskStore((state) => state.tasks)
+  const fetchTasks = useTaskStore((state) => state.fetchTasks)
   const t = useTranslation()
 
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">("all")
@@ -48,6 +50,13 @@ export default function TasksPage() {
     setDialogOpen(false)
     setEditingTask(null)
   }
+
+  useEffect(() => {
+    const fetch = async () => {
+       await fetchTasks() ; 
+    } 
+    fetch()
+  }, [tasks])
 
   return (
     <ProtectedLayout>
