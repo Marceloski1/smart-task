@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { useAuthStore } from "@/lib/store/auth-store"
+//import { useAuthStore } from "@/lib/store/auth-store"
+import { AuthService } from "@/service/auth.service"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,8 +17,8 @@ export function LoginForm() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const login = useAuthStore((s) => s.login)
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  //const login = useAuthStore((s) => s.login)
+  //const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
   const t = useTranslation()
 
   const router = useRouter()
@@ -32,7 +33,8 @@ export function LoginForm() {
   }
 
   try {
-    const user = await login(username, password) 
+    //const user = await login(username, password) 
+    const user = await AuthService.loginRequest(username , password) ; 
     router.push("/dashboard")
   } catch (err: any) {
     const message = err?.message || "Login failed"

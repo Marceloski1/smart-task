@@ -46,7 +46,11 @@ export const AuthService = {
     formData.append("username", email);
     formData.append("password", password);
 
-    const res = await api.post("/auth/login", formData);
+    const res = await api.post("/auth/login", formData , {
+      headers: {
+      "Content-Type": "application/x-www-form-urlencoded" , 
+    }
+    });
 
     // guardar token en localStorage
     if (typeof window !== "undefined") {
