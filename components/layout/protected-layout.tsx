@@ -10,16 +10,15 @@ import { AppHeader } from "./app-header"
 import { AppSidebar } from "./app-sidebar"
 
 export function ProtectedLayout({ children }: { children: React.ReactNode }) {
-  //const { isAuthenticated } = useAuthStore()
   const getAccessToken = useJwtStore((state) => state.getAccessToken)
   const isAuthenticated = getAccessToken() ? true : false ; 
   
   const router = useRouter()
 
   useEffect(() => {
-    /*if (!isAuthenticated) {
+    if (!isAuthenticated) {
       router.push("/login")
-    }*/
+    }
   }, [isAuthenticated, router])
 
   return (
