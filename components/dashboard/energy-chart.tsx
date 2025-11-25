@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useStore } from "@/lib/store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { format } from "date-fns"
 import { Battery } from "lucide-react"
 
 export function EnergyChart() {
-  const { energyLogs } = useStore()
+  const energyLogs = useEnergyStore((state) => state.energyLogs)
 
   const chartData = energyLogs.slice(-14).map((log) => ({
     date: format(log.logged_at, "MMM d"),

@@ -1,6 +1,5 @@
 import { create } from "zustand"
 import type { User, Task, Category, EnergyLog, DailyRecommendation } from "./types"
-import { mockUser, mockTasks, mockCategories, mockEnergyLogs, mockDailyRecommendation } from "./mock-data"
 import type { Language } from "./i18n"
 
 interface AppState {
@@ -51,13 +50,13 @@ interface AppState {
 
 export const useStore = create<AppState>((set) => ({
   // Initial state
-  user: mockUser,
-  isAuthenticated: true,
-  tasks: mockTasks,
+  user: null,
+  isAuthenticated: false,
+  tasks: [],
   selectedTask: null,
-  categories: mockCategories,
-  energyLogs: mockEnergyLogs,
-  dailyRecommendation: mockDailyRecommendation,
+  categories: [],
+  energyLogs: [],
+  dailyRecommendation: null,
   theme: "light",
   sidebarOpen: true,
   language: "en",
@@ -66,10 +65,7 @@ export const useStore = create<AppState>((set) => ({
   setUser: (user) => set({ user, isAuthenticated: !!user }),
 
   login: (email, password) => {
-    // Mock login - in real app, this would call API
-    if (email === mockUser.email && password === "demo") {
-      set({ user: mockUser, isAuthenticated: true })
-    }
+    // Removed - use auth.store
   },
 
   logout: () => set({ user: null, isAuthenticated: false }),

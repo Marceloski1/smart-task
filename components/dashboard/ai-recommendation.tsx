@@ -4,12 +4,18 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { useStore } from "@/lib/store"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
+import { useRecommendationStore } from "@/lib/store/for-service/recommendation.store"
 import { Sparkles, CheckCircle2, X } from "lucide-react"
 import { useTranslation } from "@/lib/i18n"
 
 export function AIRecommendation() {
-  const { dailyRecommendation, tasks, updateRecommendation, updateTask } = useStore()
+  const recommendations = useRecommendationStore((state) => state.recommendations)
+  const updateRecommendationAction = useRecommendationStore((state) => state.updateRecommendation)
+  const tasks = useTaskStore((state) => state.tasks)
+  const updateTaskAction = useTaskStore((state) => state.updateTask)
+
+  const dailyRecommendation = recommendations.find((r) => r.status === "pending") || null
   const t = useTranslation()
 
   if (!dailyRecommendation || dailyRecommendation.status !== "pending") {
@@ -23,12 +29,16 @@ export function AIRecommendation() {
   }
 
   const handleAccept = () => {
-    updateRecommendation({ status: "accepted" })
-    updateTask(recommendedTask.id, { status: "in_progress" })
+    if (dailyRecommendation && recommendedTask) {
+      updateRecommendationAction(dailyRecommendation.id, { status: "accepted" })
+      updateTaskAction(recommendedTask.id, { status: "in_progress" })
+    }
   }
 
   const handleReject = () => {
-    updateRecommendation({ status: "rejected" })
+    if (dailyRecommendation) {
+      updateRecommendationAction(dailyRecommendation.id, { status: "rejected" })
+    }
   }
 
   const confidencePercentage = Math.round(dailyRecommendation.confidence_score * 100)
@@ -69,11 +79,11 @@ export function AIRecommendation() {
           <div className="flex gap-2">
             <Button onClick={handleAccept} className="flex-1">
               <CheckCircle2 className="mr-2 h-4 w-4" />
-              {t.recommendations.acceptRecommendation}
+              {t.recommendations.accept}
             </Button>
             <Button onClick={handleReject} variant="outline" className="flex-1 bg-transparent">
               <X className="mr-2 h-4 w-4" />
-              {t.recommendations.skipRecommendation}
+              {t.recommendations.reject}
             </Button>
           </div>
         </CardContent>

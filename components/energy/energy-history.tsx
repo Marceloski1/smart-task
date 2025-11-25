@@ -3,12 +3,12 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { useStore } from "@/lib/store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { format } from "date-fns"
 import { Calendar } from "lucide-react"
 
 export function EnergyHistory() {
-  const { energyLogs } = useStore()
+  const { energyLogs } = useEnergyStore()
 
   const sortedLogs = [...energyLogs].sort((a, b) => b.logged_at.getTime() - a.logged_at.getTime())
 

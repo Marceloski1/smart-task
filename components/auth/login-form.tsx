@@ -3,8 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
-//import { useAuthStore } from "@/lib/store/auth-store"
-import { AuthService } from "@/service/auth.service"
+import { useAuthStore } from "@/lib/store/for-service/auth.store"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -23,6 +22,8 @@ export function LoginForm() {
 
   const router = useRouter()
 
+  const login = useAuthStore((state) => state.login)
+
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
   setError("")
@@ -33,8 +34,7 @@ export function LoginForm() {
   }
 
   try {
-    //const user = await login(username, password) 
-    const user = await AuthService.loginRequest(username , password) ; 
+    await login(username, password)
     router.push("/dashboard")
   } catch (err: any) {
     const message = err?.message || "Login failed"

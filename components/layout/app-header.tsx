@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useStore } from "@/lib/store"
+import { useAuthStore } from "@/lib/store/for-service/auth.store"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -16,11 +17,13 @@ import { Menu, Moon, Sun, LogOut, Settings, User, Languages } from "lucide-react
 import { useTranslation } from "@/lib/i18n"
 
 export function AppHeader() {
-  const { user, theme, toggleTheme, setSidebarOpen, sidebarOpen, logout, language, setLanguage } = useStore()
+  const user = useAuthStore((state) => state.user)
+  const authLogout = useAuthStore((state) => state.logout)
+  const { theme, toggleTheme, setSidebarOpen, sidebarOpen, language, setLanguage } = useStore()
   const t = useTranslation()
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await authLogout()
     window.location.href = "/login"
   }
 

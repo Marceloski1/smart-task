@@ -13,7 +13,7 @@ interface TaskState {
   fetchTasks: (params?: { skip?: number; limit?: number; status?: string }) => Promise<void>;
   getTask: (id: string) => Promise<Task | null>;
   createTask: (data: TaskCreate) => Promise<Task | null>;
-  updateTask: (id: string, data: Partial<TaskCreate>) => Promise<Task | null>;
+  updateTask: (id: string, data: Partial<Task>) => Promise<Task | null>;
   deleteTask: (id: string) => Promise<boolean>;
 }
 
@@ -57,7 +57,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
     }
   },
 
-  updateTask: async (id: string, data: Partial<TaskCreate>) => {
+  updateTask: async (id: string, data: Partial<Task>) => {
     try {
       const updated = await TaskService.update(id, data);
 

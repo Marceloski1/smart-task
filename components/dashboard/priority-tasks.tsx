@@ -3,13 +3,13 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { useStore } from "@/lib/store"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
 import { format } from "date-fns"
 import { Clock, AlertCircle } from "lucide-react"
 import { useTranslation } from "@/lib/i18n"
 
 export function PriorityTasks() {
-  const { tasks } = useStore()
+  const tasks = useTaskStore((state) => state.tasks)
   const t = useTranslation()
 
   const highPriorityTasks = tasks

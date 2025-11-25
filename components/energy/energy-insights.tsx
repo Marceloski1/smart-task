@@ -1,10 +1,10 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useStore } from "@/lib/store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { TrendingUp, TrendingDown, Minus, Lightbulb } from "lucide-react"
 
 export function EnergyInsights() {
-  const { energyLogs } = useStore()
+  const { energyLogs } = useEnergyStore()
 
   const recentLogs = energyLogs.slice(-14)
 
