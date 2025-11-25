@@ -8,19 +8,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { useStore } from "@/lib/store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
+import { useAuthStore } from "@/lib/store/for-service/auth.store"
 import type { EnergyLevel, EnergyLog } from "@/lib/types"
 import { type Battery, BatteryLow, BatteryMedium, BatteryFull } from "lucide-react"
 import { useTranslation } from "@/lib/i18n"
 
 export function EnergyForm() {
-  const { addEnergyLog, user } = useStore()
+  const energyStore = useEnergyStore()
+  const authStore = useAuthStore()
+  const addEnergyLog = energyStore.addEnergyLog
+  const user = authStore.user
   const t = useTranslation()
 
   const [selectedLevel, setSelectedLevel] = useState<EnergyLevel>("medium")
   const [mood, setMood] = useState("")
   const [notes, setNotes] = useState("")
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const energyLevels: Array<{
     value: EnergyLevel
@@ -52,27 +58,48 @@ export function EnergyForm() {
     },
   ]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!user) return
 
-    const newLog: EnergyLog = {
-      id: crypto.randomUUID(),
-      user_id: user.id,
-      task_id: null,
-      energy_level: selectedLevel,
-      mood: mood.trim() || undefined,
-      notes: notes.trim() || undefined,
-      logged_at: new Date(),
+    setLoading(true)
+    setError("")
+    setSuccess(false)
+
+    try {
+      // 1. Combinamos el Mood dentro de las notas porque la BD no tiene columna 'mood'
+      let finalNotes = notes.trim();
+      if (mood.trim()) {
+        finalNotes = `[Estado: ${mood.trim()}] ${finalNotes}`;
+      }
+
+      const logData = {
+        energy_level: selectedLevel,
+        logged_at: new Date().toISOString(),
+        // 2. Ya no enviamos 'mood' como propiedad separada
+        notes: finalNotes || undefined, 
+        task_id: null,
+      }
+
+      // @ts-ignore - Ignoramos error de tipo temporal si la interfaz del store espera mood
+      const result = await addEnergyLog(logData)
+
+      if (result) {
+        setSuccess(true)
+        setMood("")
+        setNotes("")
+        setSelectedLevel("medium")
+        setTimeout(() => setSuccess(false), 3000)
+      } else {
+        setError("No se pudo guardar el registro")
+      }
+    } catch (err: any) {
+      console.error("Error submitting energy log:", err)
+      setError(err.message || "Ocurrió un error al guardar")
+    } finally {
+      setLoading(false)
     }
-
-    addEnergyLog(newLog)
-    setSuccess(true)
-    setMood("")
-    setNotes("")
-
-    setTimeout(() => setSuccess(false), 3000)
   }
 
   return (
@@ -143,8 +170,18 @@ export function EnergyForm() {
                 </motion.div>
               )}
 
-              <Button type="submit" className="w-full">
-                {t.energy.logEnergyLevel}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="rounded-lg bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-400"
+                >
+                  {error}
+                </motion.div>
+              )}
+
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Saving..." : t.energy.logEnergyLevel}
               </Button>
             </form>
           </CardContent>

@@ -3,11 +3,13 @@
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle2, Clock, TrendingUp, Zap } from "lucide-react"
-import { useStore } from "@/lib/store"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { useTranslation } from "@/lib/i18n"
 
 export function StatsCards() {
-  const { tasks, energyLogs } = useStore()
+  const tasks = useTaskStore((state) => state.tasks)
+  const energyLogs = useEnergyStore((state) => state.energyLogs)
   const t = useTranslation()
 
   const completedTasks = tasks.filter((t) => t.status === "completed").length

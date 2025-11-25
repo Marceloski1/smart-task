@@ -1,66 +1,34 @@
 'use client'
 
-import { TaskCreate } from "@/lib/types";
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// 🔑 Función para obtener token al momento
-function authHeader() {
-  const token = localStorage.getItem("access_token");
-  if (!token) throw new Error("No access token found in localStorage");
-  return { Authorization: `Bearer ${token}` };
-}
-
-///New information 
+import { Task, TaskCreate } from "@/lib/types";
+import api from "@/api/axios/axios-global";
 
 export const TaskService = {
- fetchTasks: async () => {
-    const  skip = 0, limit = 100 , status = 200 
-
+ fetchTasks: async (params = { skip: 0, limit: 100 }) => {
     const res = await api.get("/tasks", {
-      params: { skip, limit, status },
-      headers: authHeader(),
+      params,
     });
-
+ 
     return res.data;
-  } , 
+  } ,
 
-  getById: async (taskId) => {
-    const res = await api.get(`/tasks/${taskId}` , {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+  getById: async (taskId: string) => {
+    const res = await api.get(`/tasks/${taskId}`);
     return res.data;
   },
 
   create: async (taskData:TaskCreate) => {
-    const res = await api.post("/tasks", taskData , 
-        { headers:  authHeader() }
-    );
+    const res = await api.post("/tasks", taskData);
    return res.data;
-    console.log(taskData)
   },
 
-  update: async (taskId, taskData) => {
-    const res = await api.put(`/tasks/${taskId}`, taskData , 
-       {
-      headers: { Authorization: `Bearer ${token}` }
-    }
-    );
+  update: async (taskId: string, taskData: Partial<Task>) => {
+    const res = await api.put(`/tasks/${taskId}`, taskData);
     return res.data;
   },
 
-  delete: async (taskId) => {
-    const res = await api.delete(`/tasks/${taskId}` , 
-       {
-      headers: { Authorization: `Bearer ${token}` }
-    }
-    );
+  delete: async (taskId: string) => {
+    const res = await api.delete(`/tasks/${taskId}`);
     return res.data;
   },
 };

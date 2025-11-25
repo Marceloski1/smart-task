@@ -5,59 +5,63 @@ import { RecommendationCard } from "@/components/recommendations/recommendation-
 import { RecommendationHistory } from "@/components/recommendations/recommendation-history"
 import { RecommendationStats } from "@/components/recommendations/recommendation-stats"
 import { AIExplanation } from "@/components/recommendations/ai-explanation"
-import { useStore } from "@/lib/store"
-import { mockDailyRecommendation } from "@/lib/mock-data"
+import { useEffect } from "react"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
+import { useRecommendationStore } from "@/lib/store/for-service/recommendation.store"
 
 export default function RecommendationsPage() {
-  const { dailyRecommendation, tasks, updateRecommendation, updateTask } = useStore()
+  const fetchRecommendations = useRecommendationStore((state) => state.fetchRecommendations)
+  const recommendations = useRecommendationStore((state) => state.recommendations)
+  const updateRecommendation = useRecommendationStore((state) => state.updateRecommendation)
+  const tasks = useTaskStore((state) => state.tasks)
+  const fetchTasks = useTaskStore((state) => state.fetchTasks)
+  const updateTask = useTaskStore((state) => state.updateTask)
 
-  const currentRecommendation = dailyRecommendation || mockDailyRecommendation
+  useEffect(() => {
+    fetchRecommendations()
+    fetchTasks()
+  }, [fetchRecommendations, fetchTasks])
 
-  const recommendedTask = tasks.find((t) => t.id === currentRecommendation.task_id)
+  const pendingRecommendation = recommendations.find((r) => r.status === "pending")
 
+  const recommendedTask = pendingRecommendation ? tasks.find((t) => t.id === pendingRecommendation.task_id) : null
+
+    // Add logs to check data
+  useEffect(() => {
+  }, [recommendations, pendingRecommendation, recommendedTask])
+  
   const handleAccept = () => {
-    updateRecommendation({ status: "accepted" })
-    if (recommendedTask) {
+    if (pendingRecommendation && recommendedTask) {
+      updateRecommendation(pendingRecommendation.id, { status: "accepted" })
       updateTask(recommendedTask.id, { status: "in_progress" })
     }
   }
 
   const handleReject = () => {
-    updateRecommendation({ status: "rejected" })
+    if (pendingRecommendation) {
+      updateRecommendation(pendingRecommendation.id, { status: "rejected" })
+    }
   }
 
-  // Mock history data
-  const historyItems = [
-    {
-      id: "1",
-      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      taskTitle: "Complete project proposal",
-      status: "accepted",
-      confidence: 0.92,
-      wasCompleted: true,
-    },
-    {
-      id: "2",
-      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      taskTitle: "Review team code",
-      status: "accepted",
-      confidence: 0.88,
-      wasCompleted: true,
-    },
-    {
-      id: "3",
-      date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-      taskTitle: "Update documentation",
-      status: "rejected",
-      confidence: 0.75,
-    },
-  ]
+  const rawHistoryItems = recommendations.filter((r) => r.status !== "pending")
 
-  const totalRecommendations = historyItems.length + 1
-  const acceptedCount = historyItems.filter((i) => i.status === "accepted").length
-  const rejectedCount = historyItems.filter((i) => i.status === "rejected").length
-  const completedCount = historyItems.filter((i) => i.wasCompleted).length
+  const totalRecommendations = recommendations.length
+  const acceptedCount = rawHistoryItems.filter((i) => i.status === "accepted").length
+  const rejectedCount = rawHistoryItems.filter((i) => i.status === "rejected").length
+  const completedCount = rawHistoryItems.filter((i) => i.was_completed).length
   const completionRate = acceptedCount > 0 ? (completedCount / acceptedCount) * 100 : 0
+
+  const historyItems = rawHistoryItems.map((r) => {
+    const task = tasks.find((t) => t.id === r.task_id)
+    return {
+      id: r.id,
+      date: r.recommendation_date,
+      taskTitle: task?.title ?? "Unknown Task",
+      status: r.status,
+      confidence: r.confidence_score,
+      wasCompleted: r.was_completed,
+    }
+  })
 
   return (
     <ProtectedLayout>
@@ -75,9 +79,9 @@ export default function RecommendationsPage() {
         />
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {recommendedTask && (
+          {pendingRecommendation && recommendedTask && (
             <RecommendationCard
-              recommendation={currentRecommendation}
+              recommendation={pendingRecommendation}
               task={recommendedTask}
               onAccept={handleAccept}
               onReject={handleReject}

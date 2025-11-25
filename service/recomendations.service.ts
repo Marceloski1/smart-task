@@ -1,18 +1,6 @@
 "use client";
 
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL + "/recommendations",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-function authHeader() {
-  const token = localStorage.getItem("access_token");
-  return { Authorization: `Bearer ${token}` };
-}
+import api from "@/api/axios/axios-global";
 
 // ✅ Obtener recomendaciones con filtros opcionales
 export async function getRecommendations(params?: {
@@ -22,18 +10,15 @@ export async function getRecommendations(params?: {
   skip?: number;
   limit?: number;
 }) {
-  const res = await api.get("/", {
+  const res = await api.get("/recommendations", {
     params,
-    headers: authHeader(),
   });
   return res.data;
 }
 
 // ✅ Obtener recomendación por ID
 export async function getRecommendation(id: string) {
-  const res = await api.get(`/${id}`, {
-    headers: authHeader(),
-  });
+  const res = await api.get(`/recommendations/${id}`);
   return res.data;
 }
 
@@ -43,33 +28,26 @@ export async function createRecommendation(data: {
   recommendation_date: string;
   status: string;
 }) {
-  const res = await api.post("/", data, {
-    headers: authHeader(),
-  });
+  const res = await api.post("/recommendations", data);
   return res.data;
 }
 
 // ✅ Actualizar recomendación
 export async function updateRecommendation(id: string, data: any) {
-  const res = await api.put(`/${id}`, data, {
-    headers: authHeader(),
-  });
+  const res = await api.put(`/recommendations/${id}`, data);
   return res.data;
 }
 
 // ✅ Actualizar estado
 export async function updateRecommendationStatus(id: string, status: string) {
-  const res = await api.put(`/${id}/status`, null, {
+  const res = await api.put(`/recommendations/${id}/status`, null, {
     params: { status },
-    headers: authHeader(),
   });
   return res.data;
 }
 
 // ✅ Eliminar recomendación
 export async function deleteRecommendation(id: string) {
-  const res = await api.delete(`/${id}`, {
-    headers: authHeader(),
-  });
+  const res = await api.delete(`/recommendations/${id}`);
   return res.data;
 }

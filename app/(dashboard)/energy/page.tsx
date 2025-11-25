@@ -1,10 +1,19 @@
+"use client"
+
+import { useEffect } from "react"
 import { ProtectedLayout } from "@/components/layout/protected-layout"
 import { EnergyForm } from "@/components/energy/energy-form"
 import { EnergyHistory } from "@/components/energy/energy-history"
 import { EnergyInsights } from "@/components/energy/energy-insights"
 import { EnergyWeeklyChart } from "@/components/energy/energy-weekly-chart"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 
 export default function EnergyPage() {
+  const fetchEnergyLogs = useEnergyStore((state) => state.fetchEnergyLogs)
+
+  useEffect(() => {
+    fetchEnergyLogs()
+  }, [fetchEnergyLogs])
   return (
     <ProtectedLayout>
       <div className="space-y-6">

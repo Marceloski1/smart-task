@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useStore } from "@/lib/store"
+import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts"
 import { format, startOfWeek, addDays } from "date-fns"
 import { BarChart3 } from "lucide-react"
 
 export function EnergyWeeklyChart() {
-  const { energyLogs } = useStore()
+  const { energyLogs } = useEnergyStore()
 
   const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 })
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
