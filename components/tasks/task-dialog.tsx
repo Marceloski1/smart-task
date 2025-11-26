@@ -91,23 +91,32 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
 
     const { score, level } = calculatePriority()
 
-    const taskData:TaskCreate = {
+    const baseData = {
       title: formData.title.trim(),
       description: formData.description.trim() || undefined,
       urgency: formData.urgency,
       impact: formData.impact,
       estimated_duration: formData.estimated_duration ? Number.parseInt(formData.estimated_duration) : 0,
-      deadline: formData.deadline?.trim()
-  ? new Date(formData.deadline).toISOString()
-  : null , 
-      category_id: "211afeda-2f58-44f5-aa48-e29786ccd198" ,  //formData.category_id || null, for this case I use a defect value
+      deadline: formData.deadline?.trim() ? new Date(formData.deadline) : null,
+      category_id: formData.category_id || null,
       energy_required: formData.energy_required,
+      priority_score: score,
+      priority_level: level,
     }
 
     if (task) {
-      updateTask(task.id, taskData)
+      const updateData: Partial<Task> = {
+        ...baseData,
+        status: formData.status,
+      }
+      updateTask(task.id, updateData)
     } else {
-       createTask(taskData)
+      const taskData: TaskCreate = {
+        ...baseData,
+        deadline: baseData.deadline ? baseData.deadline.toISOString() : null,
+        category_id: baseData.category_id,
+      }
+      createTask(taskData)
     }
 
     onClose()
@@ -127,7 +136,7 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
                 id="title"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                placeholder={"Task title"}
+                placeholder={t.tasks.taskTitlePlaceholder}
                 required
               />
             </div>
@@ -138,7 +147,7 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder={"Task description"}
+                placeholder={t.tasks.taskDescriptionPlaceholder}
                 rows={3}
               />
             </div>
@@ -245,7 +254,7 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
                   type="number"
                   value={formData.estimated_duration}
                   onChange={(e) => setFormData({ ...formData, estimated_duration: e.target.value })}
-                  placeholder={"Time in hours"}
+                  placeholder={t.tasks.timeInHoursPlaceholder}
                   min="1"
                 />
               </div>

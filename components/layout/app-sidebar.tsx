@@ -20,7 +20,7 @@ export function AppSidebar() {
     { name: t.nav.energy, href: "/energy", icon: Battery },
     { name: t.nav.recommendations, href: "/recommendations", icon: Sparkles },
     { name: t.nav.categories, href: "/categories", icon: Clipboard },
-  ]
+  ] as const
 
   return (
     <>
@@ -48,7 +48,7 @@ export function AppSidebar() {
             className="fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-border bg-card md:sticky md:top-16 md:h-[calc(100vh-4rem)]"
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-4 sm:hidden">
-              <h2 className="text-lg font-semibold">Menu</h2>
+              <h2 className="text-lg font-semibold">{t.sidebar.menu}</h2>
               <Button variant="ghost" size="icon" onClick={() => 
                 setSidebarOpen(false) }>
                 <X className="h-5 w-5" />
@@ -80,8 +80,8 @@ export function AppSidebar() {
 
             <div className="border-t border-border p-4">
               <div className="rounded-lg bg-muted p-3 text-xs text-muted-foreground">
-                <p className="font-medium text-foreground">AI-Powered</p>
-                <p className="mt-1">SmartTask uses intelligent algorithms to help you prioritize tasks</p>
+                <p className="font-medium text-foreground">{t.sidebar.aiPowered}</p>
+                <p className="mt-1">{t.sidebar.aiPoweredDescription}</p>
               </div>
             </div>
           </motion.aside>

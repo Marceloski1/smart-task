@@ -1,9 +1,11 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useTranslation } from "@/lib/i18n"
 import { Lightbulb, Brain, Zap, Target } from "lucide-react"
 
 export function AIExplanation() {
+  const t = useTranslation()
   const factors = [
     {
       icon: Target,
@@ -34,8 +36,7 @@ export function AIExplanation() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground leading-relaxed">
-          SmartTask uses intelligent algorithms to analyze multiple factors and recommend the best task for you each
-          day.
+          {t.aiExplanation.aiAlgorithms}
         </p>
         <div className="space-y-3">
           {factors.map((factor) => (

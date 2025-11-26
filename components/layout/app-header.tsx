@@ -44,7 +44,7 @@ export function AppHeader() {
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(!sidebarOpen)} className="md:hidden">
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle sidebar</span>
+            <span className="sr-only">{t.sidebar.toggleSidebar}</span>
           </Button>
           <h1 className="text-xl font-bold text-primary">SmartTask</h1>
         </div>

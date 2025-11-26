@@ -92,11 +92,11 @@ export function EnergyForm() {
         setSelectedLevel("medium")
         setTimeout(() => setSuccess(false), 3000)
       } else {
-        setError("No se pudo guardar el registro")
+        setError(t.sidebar.failedToSave)
       }
     } catch (err: any) {
       console.error("Error submitting energy log:", err)
-      setError(err.message || "Ocurrió un error al guardar")
+      setError(err.message || t.sidebar.genericError)
     } finally {
       setLoading(false)
     }

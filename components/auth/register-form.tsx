@@ -29,7 +29,7 @@ export function RegisterForm() {
     setSuccess(false)
 
     if (!name || !email || !password || !confirmPassword) {
-      setError("Please fill in all fields")
+      setError(t.auth.fillAllFields)
       return
     }
 
@@ -39,7 +39,7 @@ export function RegisterForm() {
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters")
+      setError(t.auth.passwordTooShort)
       return
     }
     
@@ -51,7 +51,7 @@ export function RegisterForm() {
         router.push("/login")
       
     } catch (err: any) {
-      const message = err?.message || "Registration failed"
+      const message = err?.message || t.auth.registerFailed
       setError(String(message))
     }
   }

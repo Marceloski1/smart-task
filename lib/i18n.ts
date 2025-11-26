@@ -30,6 +30,7 @@ export const translations = {
       tasks: "Tasks",
       energy: "Energy",
       recommendations: "Recommendations",
+      categories: "Categories",
       settings: "Settings",
       profile: "Profile",
       logout: "Log out",
@@ -50,6 +51,11 @@ export const translations = {
       loginHere: "Log in here",
       loginSuccess: "Login successful!",
       registerSuccess: "Registration successful!",
+      loginFailed: "Login failed",
+      registerFailed: "Registration failed",
+      fillAllFields: "Please fill in all fields",
+      passwordsDoNotMatch: "Passwords do not match",
+      passwordTooShort: "Password must be at least 6 characters",
       welcomeBack: "Welcome back to",
       getStarted: "Get started with",
       manageTasksIntelligently: "Manage your tasks intelligently with AI-powered recommendations",
@@ -104,13 +110,17 @@ export const translations = {
       completeTask: "Mark Complete",
       deleteTask: "Delete task",
       deleteConfirm: "Are you sure you want to delete this task?",
-      editTask: "Edit task",
       noTasksFound: "No tasks found",
       createTaskToStart: "Create a new task to get started",
       score: "Score",
       aiPriorityCalculation: "AI Priority Calculation",
       aiPriorityDesc:
         "Based on urgency, impact, and deadline, this task will be assigned a priority score automatically",
+     taskTitlePlaceholder: "Enter task title",
+     taskDescriptionPlaceholder: "Enter task description",
+     timeInHoursPlaceholder: "Time in hours",
+     categoryNamePlaceholder: "Enter category name",
+     categoryDescriptionPlaceholder: "Enter category description",
     },
 
     // Energy
@@ -127,7 +137,6 @@ export const translations = {
       notes: "Notes (optional)",
       notesPlaceholder: "Add any additional notes about your energy level...",
       logSuccess: "Energy level logged successfully!",
-      logEnergyLevel: "Log Energy Level",
       aiInsights: "AI Insights",
       weeklyTrend: "Weekly Trend",
       trendUp: "Your energy levels are improving! Keep up the great work.",
@@ -186,6 +195,25 @@ export const translations = {
       account: "Account",
     },
 
+    // Sidebar
+    sidebar: {
+      menu: "Menu",
+      closeSidebar: "Close sidebar",
+      toggleSidebar: "Toggle sidebar",
+      aiPowered: "AI-Powered",
+      aiPoweredDescription: "SmartTask uses intelligent algorithms to help you prioritize tasks",
+      saving: "Saving...",
+      failedToSave: "Failed to save the record",
+      genericError: "An error occurred while saving",
+    },
+
+    // AI Explanation
+    aiExplanation: {
+      whyThisTask: "Why this task?",
+      aiAlgorithms: "SmartTask uses intelligent algorithms to analyze multiple factors and recommend the best task for you each day.",
+      keyFactors: "Key factors considered:",
+    },
+
     // Theme
     theme: {
       light: "Light",
@@ -227,6 +255,7 @@ export const translations = {
       tasks: "Tareas",
       energy: "Energía",
       recommendations: "Recomendaciones",
+      categories: "Categorías",
       settings: "Configuración",
       profile: "Perfil",
       logout: "Cerrar sesión",
@@ -247,6 +276,11 @@ export const translations = {
       loginHere: "Inicia sesión aquí",
       loginSuccess: "Inicio de sesión exitoso",
       registerSuccess: "Registro exitoso",
+      loginFailed: "Error al iniciar sesión",
+      registerFailed: "Error al registrarse",
+      fillAllFields: "Por favor complete todos los campos",
+      passwordsDoNotMatch: "Las contraseñas no coinciden",
+      passwordTooShort: "La contraseña debe tener al menos 6 caracteres",
       welcomeBack: "Bienvenido de nuevo a",
       getStarted: "Comienza con",
       manageTasksIntelligently: "Gestiona tus tareas de forma inteligente con recomendaciones impulsadas por IA",
@@ -301,13 +335,15 @@ export const translations = {
       completeTask: "Marcar como Completa",
       deleteTask: "Eliminar tarea",
       deleteConfirm: "¿Estás seguro de que quieres eliminar esta tarea?",
-      editTask: "Editar tarea",
       noTasksFound: "No se encontraron tareas",
       createTaskToStart: "Crea una nueva tarea para comenzar",
       score: "Puntaje",
       aiPriorityCalculation: "Cálculo de Prioridad IA",
       aiPriorityDesc:
         "Basado en urgencia, impacto y fecha límite, esta tarea recibirá un puntaje de prioridad automáticamente",
+      taskTitlePlaceholder: "Ingresa el título de la tarea",
+      taskDescriptionPlaceholder: "Ingresa la descripción de la tarea",
+      timeInHoursPlaceholder: "Tiempo en horas",
     },
 
     // Energy
@@ -324,7 +360,6 @@ export const translations = {
       notes: "Notas (opcional)",
       notesPlaceholder: "Agrega notas adicionales sobre tu nivel de energía...",
       logSuccess: "¡Nivel de energía registrado exitosamente!",
-      logEnergyLevel: "Registrar Nivel de Energía",
       aiInsights: "Insights de IA",
       weeklyTrend: "Tendencia Semanal",
       trendUp: "¡Tus niveles de energía están mejorando! Sigue así.",
@@ -389,6 +424,25 @@ export const translations = {
       light: "Claro",
       dark: "Oscuro",
       toggleTheme: "Cambiar tema",
+    },
+
+    // Sidebar
+    sidebar: {
+      menu: "Menú",
+      closeSidebar: "Cerrar barra lateral",
+      toggleSidebar: "Alternar barra lateral",
+      aiPowered: "Impulsado por IA",
+      aiPoweredDescription: "SmartTask usa algoritmos inteligentes para ayudarte a priorizar tareas",
+      saving: "Guardando...",
+      failedToSave: "Error al guardar el registro",
+      genericError: "Ocurrió un error al guardar",
+    },
+
+    // AI Explanation
+    aiExplanation: {
+      whyThisTask: "¿Por qué esta tarea?",
+      aiAlgorithms: "SmartTask usa algoritmos inteligentes para analizar múltiples factores y recomendar la mejor tarea para ti cada día.",
+      keyFactors: "Factores clave considerados:",
     },
 
     // Language

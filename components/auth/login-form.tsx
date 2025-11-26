@@ -27,7 +27,7 @@ export function LoginForm() {
   setError("")
 
   if (!username || !password) {
-    setError("Please fill in all fields")
+    setError(t.auth.fillAllFields)
     return
   }
 
@@ -35,7 +35,7 @@ export function LoginForm() {
     await login(username, password)
     router.push("/dashboard")
   } catch (err: any) {
-    const message = err?.message || "Login failed"
+    const message = err?.message || t.auth.loginFailed
     setError(String(message))
   }
 }
