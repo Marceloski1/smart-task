@@ -10,6 +10,7 @@ import { Clock, Edit, Trash2, CheckCircle2, PlayCircle } from "lucide-react"
 import { useStore } from "@/lib/store"
 import { useTranslation, getTranslatedValue, useLanguage } from "@/lib/i18n"
 import { TaskService } from "@/service/task.service"
+import { useTaskStore } from "@/lib/store/for-service/task.store"
 
 interface TaskCardProps {
   task: Task
@@ -17,9 +18,10 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onEdit }: TaskCardProps) {
-  const { updateTask, deleteTask, categories } = useStore()
+  const { categories } = useStore()
   const t = useTranslation()
   const language = useLanguage()
+  const {deleteTask , updateTask} = useTaskStore()
 
   const category = categories.find((c) => c.id === task.category_id)
 
@@ -49,17 +51,17 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
     }
   }
 
-  const handleStatusChange = () => {
+  const handleStatusChange = async () => {
     if (task.status === "pending") {
-      updateTask(task.id, { status: "in_progress" })
+      await TaskService.updateState(task.id, {... task , status: "in_progress" })
     } else if (task.status === "in_progress") {
-      updateTask(task.id, { status: "completed", completed_at: new Date() })
+      await TaskService.updateState(task.id, { status: "completed", completed_at: new Date() })
     }
   }
 
   const handleDelete = () => {
     if (confirm(t.tasks.deleteConfirm)) {
-      TaskService.delete(task.id)
+      deleteTask(task.id)
     }
   }
 
@@ -147,7 +149,7 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 className="mr-2 h-4 w-4" />
+                    <CheckCircle2 className="mr-2 h-4 w-4"  />
                     {t.tasks.completeTask}
                   </>
                 )}

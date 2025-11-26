@@ -100,10 +100,10 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
       deadline: formData.deadline?.trim()
   ? new Date(formData.deadline).toISOString()
   : null , 
-      category_id: "211afeda-2f58-44f5-aa48-e29786ccd198" ,  //formData.category_id || null, for this case I use a defect value
+      category_id: formData.category_id ,
       energy_required: formData.energy_required,
     }
-
+console.log(taskData)
     if (task) {
       updateTask(task.id, taskData)
     } else {

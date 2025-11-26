@@ -6,21 +6,18 @@ import { Plus } from "lucide-react"
 import { useEffect, useState } from "react"
 import {Category} from "./../../../lib/types"
 import {AnimatePresence, motion} from "framer-motion"
-import { fetchCategories } from "@/service/category.service"
 import CategoryCard from "@/components/categories/category-card"
 import CategoryDialog from "@/components/categories/category-dialog"
+import { useCategoryStore } from "@/lib/store/category-store"
 
 export default function CategoriesPage() {
-  const [categories , setCategories] = useState<Category[]>([])
+  //const [categories , setCategories] = useState<Category[]>([])
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingCategory, setEditingCategory] = useState<Category | null>(null)
+  const {fetchCategories , categories} = useCategoryStore()
 
   useEffect(() => {
-      const fetch = async () => {
-       const res = await fetchCategories()
-       setCategories(res)
-      }
-      fetch()
+     fetchCategories()
   },[])
 
    const handleEdit = (category: Category) => {
