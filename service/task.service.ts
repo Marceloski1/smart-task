@@ -1,11 +1,11 @@
 'use client'
 
-import { Task, TaskCreate } from "@/lib/types";
+import { Task, TaskCreate, TaskStatus } from "@/lib/types";
 import api from "@/api/axios/axios-global";
 
 export const TaskService = {
  fetchTasks: async (params = { skip: 0, limit: 100 }) => {
-    const res = await api.get("/tasks", {
+    const res = await api.get("/tasks/", {
       params,
     });
  
@@ -18,13 +18,18 @@ export const TaskService = {
   },
 
   create: async (taskData:TaskCreate) => {
-    const res = await api.post("/tasks", taskData);
+    const res = await api.post("/tasks/", taskData);
    return res.data;
   },
 
   update: async (taskId: string, taskData: Partial<Task>) => {
     console.log(taskData)
     const res = await api.put(`/tasks/${taskId}`, taskData);
+    return res.data;
+  },
+
+  updateStatus: async (taskId: string, status: TaskStatus) => {
+    const res = await api.patch(`/tasks/${taskId}/status?status=${status}`);
     return res.data;
   },
 

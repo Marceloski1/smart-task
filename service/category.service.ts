@@ -2,12 +2,12 @@
 import api from "@/api/axios/axios-global";
 
 export async function fetchCategories() {
-  const res = await api.get("/categories");
+  const res = await api.get("/categories/");
   return res.data;
 }
 
 export async function getCategories(skip = 0, limit = 100) {
-  const res = await api.get("/categories", {
+  const res = await api.get("/categories/", {
     params: { skip, limit },
   });
   return res.data;
@@ -22,7 +22,7 @@ export async function createCategory(data: {
   name: string;
   description?: string;
 }) {
-  const res = await api.post("/categories", data);
+  const res = await api.post("/categories/", data);
   return res.data;
 }
 

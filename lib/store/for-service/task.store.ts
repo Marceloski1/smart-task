@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { Task , TaskCreate } from "@/lib/types";
+import { Task , TaskCreate, TaskStatus } from "@/lib/types";
 import { TaskService } from "@/service/task.service";
 
 interface TaskState {
@@ -13,6 +13,7 @@ interface TaskState {
   fetchTasks: (params?: { skip?: number; limit?: number; status?: string }) => Promise<void>;
   getTask: (id: string) => Promise<Task | null>;
   createTask: (data: TaskCreate) => Promise<Task | null>;
+  updateTaskStatus: (id: string, status: TaskStatus) => Promise<Task | null>;
   updateTask: (id: string, data: Partial<Task>) => Promise<Task | null>;
   deleteTask: (id: string) => Promise<boolean>;
 }
@@ -65,6 +66,19 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         tasks: get().tasks.map((t) => (t.id === id ? updated : t)),
       });
 
+      return updated;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  },
+
+  updateTaskStatus: async (id: string, status: TaskStatus) => {
+    try {
+      const updated = await TaskService.updateStatus(id, status);
+      set({
+        tasks: get().tasks.map((t) => (t.id === id ? { ...t, status } : t)),
+      });
       return updated;
     } catch (err) {
       console.error(err);

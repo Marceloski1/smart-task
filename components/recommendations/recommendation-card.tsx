@@ -9,10 +9,17 @@ import { Sparkles, CheckCircle2, X } from "lucide-react";
 import { format } from "date-fns";
 
 interface RecommendationCardProps {
-  recommendation: DailyRecommendation;
+  recommendation: {
+    id: string;
+    status: "pending" | "accepted" | "rejected";
+    confidence_score: number;
+    recommendation_date: Date;
+    recommendation_reason: string;
+  };
   task: Task;
   onAccept: () => void;
   onReject: () => void;
+  loading?: boolean;
 }
 
 export function RecommendationCard({
@@ -20,6 +27,7 @@ export function RecommendationCard({
   task,
   onAccept,
   onReject,
+  loading = false,
 }: RecommendationCardProps) {
   const confidencePercentage = Math.round(
     recommendation.confidence_score * 100
@@ -97,21 +105,26 @@ export function RecommendationCard({
           </div>
 
           {recommendation.status === "pending" && (
-            <div className="flex gap-2">
-              <Button onClick={onAccept} className="flex-1">
-                <CheckCircle2 className="mr-2 h-4 w-4" />
-                Accept
-              </Button>
-              <Button
-                onClick={onReject}
-                variant="outline"
-                className="flex-1 bg-transparent"
-              >
-                <X className="mr-2 h-4 w-4" />
-                Reject
-              </Button>
-            </div>
-          )}
+          <div className="flex gap-2">
+            <Button 
+              onClick={onAccept} 
+              className="flex-1"
+              disabled={loading}
+            >
+              <CheckCircle2 className="mr-2 h-4 w-4" />
+              {loading ? "Processing..." : "Accept"}
+            </Button>
+            <Button
+              onClick={onReject}
+              variant="outline"
+              className="flex-1 bg-transparent"
+              disabled={loading}
+            >
+              <X className="mr-2 h-4 w-4" />
+              {loading ? "Processing..." : "Reject"}
+            </Button>
+          </div>
+        )}
         </CardContent>
       </Card>
     </motion.div>
