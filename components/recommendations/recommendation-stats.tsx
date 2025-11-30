@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { useTranslation } from "@/lib/i18n"
 import { CheckCircle2, XCircle, Clock, TrendingUp } from "lucide-react"
 
 interface RecommendationStatsProps {
@@ -16,30 +17,31 @@ export function RecommendationStats({
   rejectedCount,
   completionRate,
 }: RecommendationStatsProps) {
+  const {recommendations:t} = useTranslation()
   const stats = [
     {
-      label: "Total",
+      label: t.total,
       value: totalRecommendations,
       icon: TrendingUp,
       color: "text-blue-600 dark:text-blue-400",
       bgColor: "bg-blue-100 dark:bg-blue-900/20",
     },
     {
-      label: "Accepted",
+      label: t.accept,
       value: acceptedCount,
       icon: CheckCircle2,
       color: "text-green-600 dark:text-green-400",
       bgColor: "bg-green-100 dark:bg-green-900/20",
     },
     {
-      label: "Rejected",
+      label: t.rejected,
       value: rejectedCount,
       icon: XCircle,
       color: "text-red-600 dark:text-red-400",
       bgColor: "bg-red-100 dark:bg-red-900/20",
     },
     {
-      label: "Completion",
+      label: t.completionRate,
       value: `${Math.round(completionRate)}%`,
       icon: Clock,
       color: "text-purple-600 dark:text-purple-400",

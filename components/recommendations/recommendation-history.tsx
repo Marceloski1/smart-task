@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import { Calendar, TrendingUp } from "lucide-react"
+import { useTranslation } from "@/lib/i18n"
 
 interface RecommendationHistoryItem {
   id: string
@@ -32,12 +33,14 @@ export function RecommendationHistory({ items }: RecommendationHistoryProps) {
     }
   }
 
+  const {recommendations:t} = useTranslation() ;
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calendar className="h-5 w-5" />
-          Recommendation History
+          {t.pendingRecoments}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -60,11 +63,11 @@ export function RecommendationHistory({ items }: RecommendationHistoryProps) {
                   </span>
                   <span className="flex items-center gap-1">
                     <TrendingUp className="h-3 w-3" />
-                    {Math.round(item.confidence * 100)}% confidence
+                    {Math.round(item.confidence * 100)}% {t.confidence}
                   </span>
                   {item.wasCompleted !== undefined && (
                     <span className={item.wasCompleted ? "text-green-600 dark:text-green-400" : ""}>
-                      {item.wasCompleted ? "Completed" : "Not completed"}
+                      {item.wasCompleted ? t.completed : t.notCompleted}
                     </span>
                   )}
                 </div>

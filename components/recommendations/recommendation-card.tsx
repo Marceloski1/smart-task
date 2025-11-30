@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import type { DailyRecommendation, Task } from "@/lib/types";
 import { Sparkles, CheckCircle2, X } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslation } from "@/lib/i18n";
 
 interface RecommendationCardProps {
   recommendation: {
@@ -33,6 +34,8 @@ export function RecommendationCard({
     recommendation.confidence_score * 100
   );
 
+  const {recommendations: t} = useTranslation()
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "accepted":
@@ -57,7 +60,7 @@ export function RecommendationCard({
           <div className="flex items-start justify-between">
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-primary" />
-              Daily Recommendation
+              {t.dailyRecommendation}
             </CardTitle>
             <Badge
               variant="outline"
@@ -97,7 +100,7 @@ export function RecommendationCard({
 
           <div className="rounded-lg bg-muted/50 p-4">
             <p className="text-sm font-medium text-foreground">
-              Why this task?
+              {t.whyThisTask}
             </p>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               {recommendation.recommendation_reason}
@@ -121,7 +124,7 @@ export function RecommendationCard({
               disabled={loading}
             >
               <X className="mr-2 h-4 w-4" />
-              {loading ? "Processing..." : "Reject"}
+              {loading ? t.accept : t.reject}
             </Button>
           </div>
         )}

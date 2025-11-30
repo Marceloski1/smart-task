@@ -9,30 +9,30 @@ export function AIExplanation() {
   const factors = [
     {
       icon: Target,
-      title: "Priority Score",
-      description: "Tasks with higher urgency and impact are prioritized",
+      title: t.recommendations.factors.priorityScoreTitle,
+      description: t.recommendations.factors.priorityScoreDesc , 
     },
     {
       icon: Zap,
-      title: "Energy Match",
-      description: "Tasks are matched to your current energy levels",
+      title: t.recommendations.factors.energyMatchTitle,
+      description: t.recommendations.factors.energyMatchDesc,
     },
     {
       icon: Brain,
-      title: "Completion History",
-      description: "Your past completion patterns influence recommendations",
+      title: t.recommendations.factors.completionHistoryTitle,
+      description: t.recommendations.factors.completionHistoryDesc,
     },
     {
       icon: Lightbulb,
-      title: "Deadline Proximity",
-      description: "Upcoming deadlines are factored into the decision",
+      title: t.recommendations.factors.deadlineProximityTitle,
+      description: t.recommendations.factors.deadlineProximityDesc,
     },
   ]
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>How AI Recommendations Work</CardTitle>
+        <CardTitle>{t.recommendations.howItWorks}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground leading-relaxed">
