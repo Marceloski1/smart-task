@@ -186,7 +186,7 @@ export const translations = {
       total: "Total",
       acceptanceRate: "Acceptance Rate",
       completionRate: "Completion Rate",
-      howItWorks: "How It Works",
+      howItWorks: "How AI Recommendations Work",
       howItWorksDesc:
         "Our AI analyzes your task priorities, energy patterns, and historical performance to generate personalized daily recommendations.",
       keyFactors: "Key Factors",
@@ -197,7 +197,18 @@ export const translations = {
       recommendationHistory: "Recommendation History",
       noHistoryYet: "No recommendation history yet",
       completed: "Completed",
-      notCompleted: "Not completed",
+      notCompleted: "Not completed", 
+     factors: {
+      "priorityScoreTitle": "Priority Score",
+      "priorityScoreDesc": "Tasks with higher urgency and impact are prioritized",
+      "energyMatchTitle": "Energy Match",
+      "energyMatchDesc": "Tasks are matched to your current energy levels",
+      "completionHistoryTitle": "Completion History",
+      "completionHistoryDesc": "Your past completion patterns influence recommendations",
+      "deadlineProximityTitle": "Deadline Proximity",
+      "deadlineProximityDesc": "Upcoming deadlines are factored into the decision"
+    },
+    pendingRecoments: "Recomendation Pending"
     },
 
     // Settings
@@ -482,19 +493,26 @@ export const translations = {
       yourStats: "Tus Estadísticas",
       total: "Total",
       acceptanceRate: "Tasa de Aceptación",
-      completionRate: "Tasa de Completación",
-      howItWorks: "Cómo Funciona",
+      completionRate: "Probabilidad de Completar",
+      howItWorks: "¿Cómo Funcionan las Recomendaciones de IA?",
       howItWorksDesc:
         "Nuestra IA analiza las prioridades de tus tareas, patrones de energía y rendimiento histórico para generar recomendaciones diarias personalizadas.",
       keyFactors: "Factores Clave",
-      factor1: "Prioridad y urgencia de la tarea",
-      factor2: "Tus niveles de energía actuales",
-      factor3: "Hora del día y patrones",
-      factor4: "Historial de completación de tareas",
       recommendationHistory: "Historial de Recomendaciones",
       noHistoryYet: "No hay historial de recomendaciones todavía",
       completed: "Completada",
-      notCompleted: "No completada",
+      notCompleted: "No completada", 
+      factors: {
+      "priorityScoreTitle": "Puntuación de Prioridad",
+      "priorityScoreDesc": "Las tareas con mayor urgencia e impacto son priorizadas",
+      "energyMatchTitle": "Coincidencia de Energía",
+      "energyMatchDesc": "Las tareas se adaptan a tus niveles de energía actuales",
+      "completionHistoryTitle": "Historial de Finalización",
+      "completionHistoryDesc": "Tus patrones de finalización pasados influyen en las recomendaciones",
+      "deadlineProximityTitle": "Proximidad de Plazo",
+      "deadlineProximityDesc": "Los plazos próximos se tienen en cuenta en la decisión"
+    }, 
+    pendingRecoments: "Recomendaciones Pendientes"
     },
 
     // Settings

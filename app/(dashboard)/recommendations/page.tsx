@@ -8,6 +8,7 @@ import { AIExplanation } from "@/components/recommendations/ai-explanation"
 import { useEffect, useState } from "react"
 import { useTaskStore } from "@/lib/store/for-service/task.store"
 import { useMLTasksStore } from "@/lib/store/for-service/mltask.store"
+import { useTranslation } from "@/lib/i18n"
 
 // Interfaz local para manejar el estado de recomendación
 interface TaskRecommendation {
@@ -24,7 +25,7 @@ export default function RecommendationsPage() {
   const fetchPrioritizedTasks = useMLTasksStore((state) => state.fetchPrioritizedTasks)
   const mlTasks = useMLTasksStore((state) => state.mlTasks)
   const sendFeedback = useMLTasksStore((state) => state.sendFeedback)
-  
+  const t = useTranslation() ; 
   const tasks = useTaskStore((state) => state.tasks)
   const fetchTasks = useTaskStore((state) => state.fetchTasks)
   const updateTaskStatus = useTaskStore((state) => state.updateTaskStatus)
@@ -162,8 +163,8 @@ export default function RecommendationsPage() {
     <ProtectedLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-balance">AI Recommendations</h1>
-          <p className="mt-2 text-muted-foreground text-pretty">Get personalized task recommendations powered by AI</p>
+          <h1 className="text-3xl font-bold tracking-tight text-balance">{t.recommendations.title}</h1>
+          <p className="mt-2 text-muted-foreground text-pretty">{t.recommendations.subtitle}</p>
         </div>
 
         <RecommendationStats

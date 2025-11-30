@@ -6,11 +6,13 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import type { Task } from "@/lib/types"
 import { format } from "date-fns"
-import { Clock, Edit, Trash2, CheckCircle2, PlayCircle } from "lucide-react"
+import { Clock, Edit, Trash2, CheckCircle2, PlayCircle , FileWarning } from "lucide-react"
 import { useStore } from "@/lib/store"
 import { useTranslation, getTranslatedValue, useLanguage } from "@/lib/i18n"
 import { TaskService } from "@/service/task.service"
 import { useTaskStore } from "@/lib/store/for-service/task.store"
+import { useState } from "react"
+import { TaskInformation } from "./task-information"
 
 interface TaskCardProps {
   task: Task
@@ -22,7 +24,8 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
   const t = useTranslation()
   const language = useLanguage()
   const {deleteTask , updateTask} = useTaskStore()
-
+  const [dialogOpen, setDialogOpen] = useState(false)
+  
   const category = categories.find((c) => c.id === task.category_id)
 
   const getPriorityColor = (level?: string) => {
@@ -53,11 +56,19 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
 
   const handleStatusChange = async () => {
     if (task.status === "pending") {
-      await TaskService.updateState(task.id, {... task , status: "in_progress" })
+      await TaskService.updateStatus(task.id, "in_progress" )
     } else if (task.status === "in_progress") {
-      await TaskService.updateState(task.id, { status: "completed", completed_at: new Date() })
+      await TaskService.updateStatus(task.id, "completed") //, completed_at: new Date() 
     }
   }
+
+    const handleCloseDialog = () => {
+    setDialogOpen(false)
+    }
+
+    const handleOpenDialog = () => {
+      setDialogOpen(true) ; 
+    }
 
   const handleDelete = () => {
     if (confirm(t.tasks.deleteConfirm)) {
@@ -78,9 +89,13 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
           <div className="space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 space-y-1">
-                <h3 className="font-semibold leading-relaxed">{task.title}</h3>
+                <h3 className="font-semibold leading-relaxed"
+                onClick={() => handleOpenDialog()}
+                >{task.title}</h3>
                 {task.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{task.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed"
+                  onClick={() => handleOpenDialog()}
+                  >{task.description}</p>
                 )}
               </div>
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -109,7 +124,8 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
                   {getTranslatedValue(task.priority_level, language)}
                 </Badge>
               )}
-              {category && (
+
+              {category ? (
                 <Badge
                   variant="outline"
                   style={{
@@ -120,7 +136,7 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
                 >
                   {category.name}
                 </Badge>
-              )}
+              ) :   <FileWarning className="h-5 w-5 text-amber-300" />}
             </div>
 
             <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -158,6 +174,7 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
           </div>
         </CardContent>
       </Card>
+      <TaskInformation open={dialogOpen} onClose={handleCloseDialog} task={task}/>
     </motion.div>
   )
 }
