@@ -13,17 +13,30 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { format } from "date-fns";
+import { es, enUS } from "date-fns/locale";
 import { Battery } from "lucide-react";
+import { useTranslation, useLanguage } from "@/lib/i18n";
 
 export function EnergyChart() {
   const energyLogs = useEnergyStore((state) => state.energyLogs);
+  const t = useTranslation();
+  const language = useLanguage();
+  const locales = { en: enUS, es: es };
 
   const chartData = energyLogs.slice(-14).map((log) => ({
-    date: format(log.logged_at, "MMM d"),
+    // Localized date
+    date: format(log.logged_at, "MMM d", { locale: locales[language] }),
     energy:
       log.energy_level === "high" ? 3 : log.energy_level === "medium" ? 2 : 1,
     level: log.energy_level,
   }));
+
+  const getLabelForValue = (value: number) => {
+      if (value === 3) return t.tasks.high;
+      if (value === 2) return t.tasks.medium;
+      if (value === 1) return t.tasks.low;
+      return "";
+  }
 
   return (
     <motion.div
@@ -35,7 +48,7 @@ export function EnergyChart() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Battery className="h-5 w-5 text-primary" />
-            Energy Levels (Last 14 Days)
+            {t.energy.last14Days}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -45,7 +58,7 @@ export function EnergyChart() {
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <XAxis
                   dataKey="date"
-                  className="text-xs text-muted-foreground"
+                  className="text-xs text-muted-foreground capitalize"
                   tick={{ fill: "currentColor" }}
                   axisLine={{ stroke: "hsl(var(--border))" }}
                   tickLine={{ stroke: "hsl(var(--border))" }}
@@ -53,9 +66,7 @@ export function EnergyChart() {
                 <YAxis
                   domain={[0, 3]}
                   ticks={[1, 2, 3]}
-                  tickFormatter={(value) =>
-                    value === 3 ? "High" : value === 2 ? "Medium" : "Low"
-                  }
+                  tickFormatter={(value) => getLabelForValue(value)}
                   className="text-xs text-muted-foreground"
                   tick={{ fill: "currentColor" }}
                   axisLine={{ stroke: "hsl(var(--border))" }}
@@ -68,11 +79,11 @@ export function EnergyChart() {
                     borderRadius: "8px",
                     color: "hsl(var(--foreground))",
                   }}
-                  labelStyle={{ color: "hsl(var(--foreground))" }}
+                  labelStyle={{ color: "hsl(var(--foreground))", textTransform: "capitalize" }}
                   itemStyle={{ color: "hsl(var(--foreground))" }}
                   formatter={(value: number) => [
-                    value === 3 ? "High" : value === 2 ? "Medium" : "Low",
-                    "Energy",
+                    getLabelForValue(value),
+                    t.energy.energyLabel,
                   ]}
                 />
                 <Line

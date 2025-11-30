@@ -50,7 +50,7 @@ export const TaskSchema = z.object({
   urgency: UrgencySchema.optional(),
   impact: ImpactSchema.optional(),
   estimated_duration: z.number().int().positive().optional(),
-  deadline: z.date().nullable(),
+  deadline: z.string().datetime().nullable(),
   priority_score: z.number().int().min(1).max(100).optional(),
   priority_level: PriorityLevelSchema.optional(),
   completion_probability: z.number().min(0).max(1).optional(),

@@ -70,7 +70,7 @@ export default function CategoryDialog({ open, onClose, category }: CategoryDial
         <form onSubmit={handleSubmit}>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="title">{category?.name} *</Label>
+              <Label htmlFor="title">{t.category.labelTitle} *</Label>
               <Input
                 id="title"
                 value={formData.name}
@@ -81,7 +81,7 @@ export default function CategoryDialog({ open, onClose, category }: CategoryDial
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">{category?.description}</Label>
+              <Label htmlFor="description">{t.category.labelDescription} {t.category.optionalText}</Label>
               <Textarea
                 id="description"
                 value={formData.description}

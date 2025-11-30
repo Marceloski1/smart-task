@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useStore } from "./store"
+import { useStore } from "./store";
 
-export type Language = "en" | "es"
+export type Language = "en" | "es";
 
 export const translations = {
   en: {
@@ -34,8 +34,8 @@ export const translations = {
       settings: "Settings",
       profile: "Profile",
       logout: "Log out",
-      categories:"Categories" , 
-      summarizer:'Summarizer'
+      summarizer: "Summarizer",
+      useCases: "Use Cases",
     },
 
     // Auth
@@ -60,7 +60,8 @@ export const translations = {
       passwordTooShort: "Password must be at least 6 characters",
       welcomeBack: "Welcome back to",
       getStarted: "Get started with",
-      manageTasksIntelligently: "Manage your tasks intelligently with AI-powered recommendations",
+      manageTasksIntelligently:
+        "Manage your tasks intelligently with AI-powered recommendations",
     },
 
     // Dashboard
@@ -118,17 +119,18 @@ export const translations = {
       aiPriorityCalculation: "AI Priority Calculation",
       aiPriorityDesc:
         "Based on urgency, impact, and deadline, this task will be assigned a priority score automatically",
-     taskTitlePlaceholder: "Enter task title",
-     taskDescriptionPlaceholder: "Enter task description",
-     timeInHoursPlaceholder: "Time in hours",
-     categoryNamePlaceholder: "Enter category name",
-     categoryDescriptionPlaceholder: "Enter category description",
+      taskTitlePlaceholder: "Enter task title",
+      taskDescriptionPlaceholder: "Enter task description",
+      timeInHoursPlaceholder: "Time in hours",
+      categoryNamePlaceholder: "Enter category name",
+      categoryDescriptionPlaceholder: "Enter category description",
     },
 
     // Energy
     energy: {
       title: "Energy Tracking",
-      subtitle: "Track your energy levels to receive better task recommendations",
+      subtitle:
+        "Track your energy levels to receive better task recommendations",
       logEnergyLevel: "Log Your Energy Level",
       howAreYouFeeling: "How are you feeling right now?",
       lowEnergy: "Low Energy",
@@ -142,12 +144,17 @@ export const translations = {
       aiInsights: "AI Insights",
       weeklyTrend: "Weekly Trend",
       trendUp: "Your energy levels are improving! Keep up the great work.",
-      trendDown: "Your energy seems lower recently. Consider taking breaks and prioritizing rest.",
-      trendStable: "Your energy levels are stable. Maintain your current routine.",
+      trendDown:
+        "Your energy seems lower recently. Consider taking breaks and prioritizing rest.",
+      trendStable:
+        "Your energy levels are stable. Maintain your current routine.",
       recommendation: "Recommendation",
-      recommendationHigh: "You have high energy! This is a great time to tackle challenging tasks.",
-      recommendationMedium: "Your energy is moderate. Focus on medium-priority tasks and take regular breaks.",
-      recommendationLow: "Your energy is low. Prioritize rest and focus only on essential tasks.",
+      recommendationHigh:
+        "You have high energy! This is a great time to tackle challenging tasks.",
+      recommendationMedium:
+        "Your energy is moderate. Focus on medium-priority tasks and take regular breaks.",
+      recommendationLow:
+        "Your energy is low. Prioritize rest and focus only on essential tasks.",
       avgEnergy: "Avg Energy",
       totalLogs: "Total Logs",
       highDays: "High Days",
@@ -155,6 +162,11 @@ export const translations = {
       noLogsYet: "No energy logs yet. Start tracking your energy levels!",
       mood: "Mood",
       thisWeek: "This Week",
+      weeklyOverview: "Weekly Energy Overview",
+      last14Days: "Energy Levels (Last 14 Days)",
+      noData: "No data",
+      energyLabel: "Energy",
+      medShort: "Med",
     },
 
     // Recommendations
@@ -203,16 +215,19 @@ export const translations = {
       closeSidebar: "Close sidebar",
       toggleSidebar: "Toggle sidebar",
       aiPowered: "AI-Powered",
-      aiPoweredDescription: "SmartTask uses intelligent algorithms to help you prioritize tasks",
+      aiPoweredDescription:
+        "SmartTask uses intelligent algorithms to help you prioritize tasks",
       saving: "Saving...",
       failedToSave: "Failed to save the record",
       genericError: "An error occurred while saving",
+      tools: "Tools",
     },
 
     // AI Explanation
     aiExplanation: {
       whyThisTask: "Why this task?",
-      aiAlgorithms: "SmartTask uses intelligent algorithms to analyze multiple factors and recommend the best task for you each day.",
+      aiAlgorithms:
+        "SmartTask uses intelligent algorithms to analyze multiple factors and recommend the best task for you each day.",
       keyFactors: "Key factors considered:",
     },
 
@@ -231,30 +246,60 @@ export const translations = {
       selectLanguage: "Select language",
     },
 
-      category : {
+    category: {
       categoryTitleEdit: "Edit category",
-categoryTitleCreate: "Create category",
-inputLabelTitlePlaceholder: "Task title",
-inputLabelDescriptionPlaceholder: "Task description",
-buttonCancel: "Cancel",
-buttonSave: "Save",
-buttonCreate: "Create",
-srOnlyEditCategory: "Edit category",
-srOnlyDeleteCategory: "Delete category",
-pageTitle: "Categories",
-pageDescription: "Manage all your categories for clasify your tasks",
-emptyStateTitle: "You don´t have categories",
-  } , 
+      categoryTitleCreate: "Create category",
+      labelTitle: "Title",
+      labelDescription: "Description",
+      optionalText: "(optional)",
+      inputLabelTitlePlaceholder: "Task title",
+      inputLabelDescriptionPlaceholder: "Task description",
+      buttonCancel: "Cancel",
+      buttonSave: "Save",
+      buttonCreate: "Create",
+      srOnlyEditCategory: "Edit category",
+      srOnlyDeleteCategory: "Delete category",
+      deleteConfirm: "Are you sure you want to delete this category?",
+      deleteConfirmDescription: "This action cannot be undone. This will permanently delete the category and remove it from all associated tasks.",
+      pageTitle: "Categories",
+      pageDescription: "Manage all your categories for clasify your tasks",
+      emptyStateTitle: "You don´t have categories",
+    },
 
-  summarizer : {
-  summarizer: "Summarizer",
-  placeholderSummarizer: "Enter the text you want to summarize...",
-  buttonLoading: "Summarizing...",
-  buttonSubmit: "Generate summary",
-  generatedSummary: "Generated summary",
-  keyPhrases: "Key phrases"
-  }
-   
+    summarizer: {
+      summarizer: "Summarizer",
+      placeholderSummarizer: "Enter the text you want to summarize...",
+      buttonLoading: "Summarizing...",
+      buttonSubmit: "Generate summary",
+      generatedSummary: "Generated summary",
+      keyPhrases: "Key phrases",
+    },
+
+    useCases: {
+      title: "Use Cases",
+      subtitle: "Process images to generate PDF reports for use cases.",
+      uploadTitle: "Upload Image",
+      uploadDesc: "Upload an image to generate a PDF report. Supported formats: JPG, PNG.",
+      descriptionLabel: "Description (Optional)",
+      descriptionPlaceholder: "Enter description...",
+      selectedFile: "Selected",
+      processing: "Processing...",
+      generatePdf: "Generate PDF",
+      generatedTitle: "Generated PDF",
+      generatedDesc: "Download the processed PDF report.",
+      successMessage: "PDF generated successfully!",
+      downloadButton: "Download PDF",
+      clearButton: "Clear",
+      emptyState: "PDF will appear here after processing",
+    },
+    fileDropzone: {
+      title: "Choose files or drag & drop",
+      description: "Drag files here or click to browse your device",
+      browseButton: "Browse Files",
+      attachedFiles: "Attached Files",
+      ready: "Ready",
+      removeFile: "Remove file",
+    },
   },
 
   es: {
@@ -285,9 +330,9 @@ emptyStateTitle: "You don´t have categories",
       categories: "Categorías",
       settings: "Configuración",
       profile: "Perfil",
-      logout: "Cerrar sesión", 
-      categories:"Categorías" , 
-      summarizer:"Resumen"
+      logout: "Cerrar sesión",
+      summarizer: "Resumen",
+      useCases: "Casos de Uso",
     },
 
     // Auth
@@ -312,7 +357,8 @@ emptyStateTitle: "You don´t have categories",
       passwordTooShort: "La contraseña debe tener al menos 6 caracteres",
       welcomeBack: "Bienvenido de nuevo a",
       getStarted: "Comienza con",
-      manageTasksIntelligently: "Gestiona tus tareas de forma inteligente con recomendaciones impulsadas por IA",
+      manageTasksIntelligently:
+        "Gestiona tus tareas de forma inteligente con recomendaciones impulsadas por IA",
     },
 
     // Dashboard
@@ -378,7 +424,8 @@ emptyStateTitle: "You don´t have categories",
     // Energy
     energy: {
       title: "Seguimiento de Energía",
-      subtitle: "Rastrea tus niveles de energía para recibir mejores recomendaciones de tareas",
+      subtitle:
+        "Rastrea tus niveles de energía para recibir mejores recomendaciones de tareas",
       logEnergyLevel: "Registra tu Nivel de Energía",
       howAreYouFeeling: "¿Cómo te sientes en este momento?",
       lowEnergy: "Energía Baja",
@@ -392,26 +439,37 @@ emptyStateTitle: "You don´t have categories",
       aiInsights: "Insights de IA",
       weeklyTrend: "Tendencia Semanal",
       trendUp: "¡Tus niveles de energía están mejorando! Sigue así.",
-      trendDown: "Tu energía parece más baja recientemente. Considera tomar descansos y priorizar el descanso.",
-      trendStable: "Tus niveles de energía son estables. Mantén tu rutina actual.",
+      trendDown:
+        "Tu energía parece más baja recientemente. Considera tomar descansos y priorizar el descanso.",
+      trendStable:
+        "Tus niveles de energía son estables. Mantén tu rutina actual.",
       recommendation: "Recomendación",
-      recommendationHigh: "¡Tienes mucha energía! Este es un buen momento para abordar tareas desafiantes.",
+      recommendationHigh:
+        "¡Tienes mucha energía! Este es un buen momento para abordar tareas desafiantes.",
       recommendationMedium:
         "Tu energía es moderada. Concéntrate en tareas de prioridad media y toma descansos regulares.",
-      recommendationLow: "Tu energía es baja. Prioriza el descanso y concéntrate solo en tareas esenciales.",
+      recommendationLow:
+        "Tu energía es baja. Prioriza el descanso y concéntrate solo en tareas esenciales.",
       avgEnergy: "Energía Promedio",
       totalLogs: "Registros Totales",
       highDays: "Días Altos",
       energyHistory: "Historial de Energía",
-      noLogsYet: "No hay registros de energía todavía. ¡Comienza a rastrear tus niveles de energía!",
+      noLogsYet:
+        "No hay registros de energía todavía. ¡Comienza a rastrear tus niveles de energía!",
       mood: "Estado de Ánimo",
       thisWeek: "Esta Semana",
+      weeklyOverview: "Resumen Semanal de Energía",
+      last14Days: "Niveles de Energía (Últimos 14 días)",
+      noData: "Sin datos",
+      energyLabel: "Energía",
+      medShort: "Med",
     },
 
     // Recommendations
     recommendations: {
       title: "Recomendaciones de IA",
-      subtitle: "Obtén recomendaciones de tareas personalizadas impulsadas por IA",
+      subtitle:
+        "Obtén recomendaciones de tareas personalizadas impulsadas por IA",
       dailyRecommendation: "Recomendación Diaria",
       confidence: "coincidencia",
       whyThisTask: "¿Por qué esta tarea?",
@@ -461,16 +519,19 @@ emptyStateTitle: "You don´t have categories",
       closeSidebar: "Cerrar barra lateral",
       toggleSidebar: "Alternar barra lateral",
       aiPowered: "Impulsado por IA",
-      aiPoweredDescription: "SmartTask usa algoritmos inteligentes para ayudarte a priorizar tareas",
+      aiPoweredDescription:
+        "SmartTask usa algoritmos inteligentes para ayudarte a priorizar tareas",
       saving: "Guardando...",
       failedToSave: "Error al guardar el registro",
       genericError: "Ocurrió un error al guardar",
+      tools: "Herramientas",
     },
 
     // AI Explanation
     aiExplanation: {
       whyThisTask: "¿Por qué esta tarea?",
-      aiAlgorithms: "SmartTask usa algoritmos inteligentes para analizar múltiples factores y recomendar la mejor tarea para ti cada día.",
+      aiAlgorithms:
+        "SmartTask usa algoritmos inteligentes para analizar múltiples factores y recomendar la mejor tarea para ti cada día.",
       keyFactors: "Factores clave considerados:",
     },
 
@@ -481,32 +542,63 @@ emptyStateTitle: "You don´t have categories",
       spanish: "Español",
       selectLanguage: "Seleccionar idioma",
     },
-  
+
     //Categories
-    category : {
-categoryTitleEdit: "Editar categoría",
-categoryTitleCreate: "Crear categoría",
-inputLabelTitlePlaceholder: "Título de la tarea",
-inputLabelDescriptionPlaceholder: "Descripción de la tarea",
-buttonCancel: "Cancelar",
-buttonSave: "Guardar",
-buttonCreate: "Crear", 
-srOnlyEditCategory: "Editar categoría",
-srOnlyDeleteCategory: "Eliminar categoría",
-pageTitle: "Categorías",
-pageDescription: "Administra todas tus categorías para clasificar tus tareas",
-emptyStateTitle: "No tienes categorías",
-    } , 
- summarizer: {
-  summarizer: "Resumidor",
-  placeholderSummarizer: "Introduce el texto que deseas resumir...",
-  buttonLoading: "Resumiendo...",
-  buttonSubmit: "Generar resumen",
-  generatedSummary: "Resumen generado",
-  keyPhrases: "Palabras clave"
-  }
+    category: {
+      categoryTitleEdit: "Editar categoría",
+      categoryTitleCreate: "Crear categoría",
+      labelTitle: "Título",
+      labelDescription: "Descripción",
+      optionalText: "(opcional)",
+      inputLabelTitlePlaceholder: "Título de la tarea",
+      inputLabelDescriptionPlaceholder: "Descripción de la tarea",
+      buttonCancel: "Cancelar",
+      buttonSave: "Guardar",
+      buttonCreate: "Crear",
+      srOnlyEditCategory: "Editar categoría",
+      srOnlyDeleteCategory: "Eliminar categoría",
+      deleteConfirm: "¿Estás seguro de que quieres eliminar esta categoría?",
+      deleteConfirmDescription: "Esta acción no se puede deshacer. Esto eliminará permanentemente la categoría y la quitará de todas las tareas asociadas.",
+      pageTitle: "Categorías",
+      pageDescription:
+        "Administra todas tus categorías para clasificar tus tareas",
+      emptyStateTitle: "No tienes categorías",
+    },
+    summarizer: {
+      summarizer: "Resumidor",
+      placeholderSummarizer: "Introduce el texto que deseas resumir...",
+      buttonLoading: "Resumiendo...",
+      buttonSubmit: "Generar resumen",
+      generatedSummary: "Resumen generado",
+      keyPhrases: "Palabras clave",
+    },
+    useCases: {
+      title: "Casos de Uso",
+      subtitle: "Procesa imágenes para generar reportes PDF de casos de uso.",
+      uploadTitle: "Subir Imagen",
+      uploadDesc: "Sube una imagen para generar un reporte PDF. Formatos soportados: JPG, PNG.",
+      descriptionLabel: "Descripción (Opcional)",
+      descriptionPlaceholder: "Ingresa una descripción...",
+      selectedFile: "Seleccionado",
+      processing: "Procesando...",
+      generatePdf: "Generar PDF",
+      generatedTitle: "PDF Generado",
+      generatedDesc: "Descarga el reporte PDF procesado.",
+      successMessage: "¡PDF generado exitosamente!",
+      downloadButton: "Descargar PDF",
+      clearButton: "Limpiar",
+      emptyState: "El PDF aparecerá aquí después del procesamiento",
+    },
+    fileDropzone: {
+      title: "Elige archivos o arrastra y suelta",
+      description: "Arrastra archivos aquí o haz clic para buscar en tu dispositivo",
+      browseButton: "Explorar Archivos",
+      attachedFiles: "Archivos Adjuntos",
+      ready: "Listo",
+      removeFile: "Eliminar archivo",
+    },
   },
-}
+};
 
 // This ensures filters work correctly when switching languages
 export const categoryMappings = {
@@ -532,7 +624,7 @@ export const categoryMappings = {
     aceptada: "accepted",
     rechazada: "rejected",
   },
-}
+};
 
 // Reverse mappings: from English key to translated display value
 export const reverseMappings = {
@@ -558,30 +650,38 @@ export const reverseMappings = {
     accepted: "Aceptada",
     rejected: "Rechazada",
   },
-}
+};
 
 export function useTranslation() {
-  const language = useStore((state) => state.language)
-  return translations[language]
+  const language = useStore((state) => state.language);
+  return translations[language];
 }
 
 export function useLanguage() {
-  const language = useStore((state) => state.language)
-  return language
+  const language = useStore((state) => state.language);
+  return language;
 }
 
 // Helper to get translated value for status/priority/etc
-export function getTranslatedValue(key: string, language: Language = "en"): string {
-  return reverseMappings[language][key as keyof typeof reverseMappings.en] || key
+export function getTranslatedValue(
+  key: string,
+  language: Language = "en"
+): string {
+  return (
+    reverseMappings[language][key as keyof typeof reverseMappings.en] || key
+  );
 }
 
 // Helper to get original English key from translated value
-export function getEnglishKey(translatedValue: string, language: Language = "es"): string {
-  if (language === "en") return translatedValue.toLowerCase().replace(" ", "_")
+export function getEnglishKey(
+  translatedValue: string,
+  language: Language = "es"
+): string {
+  if (language === "en") return translatedValue.toLowerCase().replace(" ", "_");
 
   const mapping = Object.entries(reverseMappings.es).find(
-    ([_, value]) => value.toLowerCase() === translatedValue.toLowerCase(),
-  )
+    ([_, value]) => value.toLowerCase() === translatedValue.toLowerCase()
+  );
 
-  return mapping ? mapping[0] : translatedValue
+  return mapping ? mapping[0] : translatedValue;
 }

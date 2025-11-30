@@ -5,12 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 import { format } from "date-fns"
+import { es, enUS } from "date-fns/locale" // Import locales
 import { Calendar } from "lucide-react"
+import { useTranslation, useLanguage, getTranslatedValue } from "@/lib/i18n"
 
 export function EnergyHistory() {
   const { energyLogs } = useEnergyStore()
+  const t = useTranslation()
+  const language = useLanguage()
 
   const sortedLogs = [...energyLogs].sort((a, b) => b.logged_at.getTime() - a.logged_at.getTime())
+  
+  // Date locale map
+  const locales = { en: enUS, es: es }
 
   const getEnergyColor = (level: string) => {
     switch (level) {
@@ -28,12 +35,12 @@ export function EnergyHistory() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Energy History</CardTitle>
+        <CardTitle>{t.energy.energyHistory}</CardTitle>
       </CardHeader>
       <CardContent>
         {sortedLogs.length === 0 ? (
           <p className="text-center text-sm text-muted-foreground py-8">
-            No energy logs yet. Start tracking your energy levels!
+            {t.energy.noLogsYet}
           </p>
         ) : (
           <div className="space-y-3">
@@ -47,14 +54,19 @@ export function EnergyHistory() {
               >
                 <div className="flex items-center justify-between">
                   <Badge variant="outline" className={getEnergyColor(log.energy_level)}>
-                    {log.energy_level} energy
+                    {/* Translating "High" + "Energy" */}
+                    {getTranslatedValue(log.energy_level, language)} {t.energy.energyLabel.toLowerCase()}
                   </Badge>
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Calendar className="h-3 w-3" />
-                    {format(log.logged_at, "MMM d, yyyy - h:mm a")}
+                    {format(log.logged_at, "MMM d, yyyy - h:mm a", { locale: locales[language] })}
                   </span>
                 </div>
-                {log.mood && <p className="text-sm font-medium text-foreground">Mood: {log.mood}</p>}
+                {log.mood && (
+                    <p className="text-sm font-medium text-foreground">
+                        {t.energy.mood}: {log.mood}
+                    </p>
+                )}
                 {log.notes && <p className="text-sm text-muted-foreground leading-relaxed">{log.notes}</p>}
               </motion.div>
             ))}

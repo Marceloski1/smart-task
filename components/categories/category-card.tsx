@@ -6,19 +6,28 @@ import { Button } from "../ui/button"
 import { Edit, Trash2 } from "lucide-react"
 import { useCategoryStore } from "@/lib/store/category-store"
 import { useTranslation } from "@/lib/i18n"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { useState } from "react"
 
 interface CategoryCardProps {
-    category:Category , 
+    category:Category ,
     onEdit:(category:Category) => void
 }
 
 export default function CategoryCard({category , onEdit}:CategoryCardProps) {
-  const {deleteCategory} = useCategoryStore() ; 
-  const t = useTranslation() 
+  const {deleteCategory} = useCategoryStore() ;
+  const t = useTranslation()
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async () => {
-      if(confirm("Are you sure you want to delete this category?"))
-        await deleteCategory(category.id)  ;
+    setIsDeleting(true);
+    try {
+      await deleteCategory(category.id);
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
     return (
@@ -44,15 +53,37 @@ export default function CategoryCard({category , onEdit}:CategoryCardProps) {
                   <Edit className="h-4 w-4" />
                   <span className="sr-only">{t.category.srOnlyEditCategory}</span>
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleDelete}
-                  className="h-8 w-8 text-destructive hover:text-destructive"
-                >
-                  <Trash2 className="h-4 w-4" />
-                  <span className="sr-only">{t.category.srOnlyDeleteCategory}</span>
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive hover:text-destructive"
+                      disabled={isDeleting}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">{t.category.srOnlyDeleteCategory}</span>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>{t.category.deleteConfirm}</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        {t.category.deleteConfirmDescription}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>{t.category.buttonCancel}</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDelete}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? "Deleting..." : t.common.delete}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           </div>

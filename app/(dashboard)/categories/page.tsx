@@ -51,33 +51,29 @@ export default function CategoriesPage() {
           </Button>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        
-
-          <div>
-            {categories.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border p-12 text-center"
-              >
-                <p className="text-lg font-medium text-muted-foreground">{t.category.emptyStateTitle}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{t.category.buttonCreate}</p>
-                <Button onClick={handleCreate} className="mt-4">
-                  <Plus className="mr-2 h-4 w-4" />
-                  {t.category.buttonCreate}
-                </Button>
-              </motion.div>
-            ) : (
-              <div className="grid gap-4 md:grid-cols-2">
-                <AnimatePresence mode="popLayout">
-                  {categories.map((categorie) => (
-                    <CategoryCard key={categorie.id} category={categorie} onEdit={handleEdit} />
-                  ))}
-                </AnimatePresence>
-              </div>
-            )}
-          </div>
+        <div>
+          {categories.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border p-12 text-center"
+            >
+              <p className="text-lg font-medium text-muted-foreground">{t.category.emptyStateTitle}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{t.category.buttonCreate}</p>
+              <Button onClick={handleCreate} className="mt-4">
+                <Plus className="mr-2 h-4 w-4" />
+                {t.category.buttonCreate}
+              </Button>
+            </motion.div>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <AnimatePresence mode="popLayout">
+                {categories.map((categorie) => (
+                  <CategoryCard key={categorie.id} category={categorie} onEdit={handleEdit} />
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
 
         <CategoryDialog open={dialogOpen} onClose={handleCloseDialog} category={editingCategory} />

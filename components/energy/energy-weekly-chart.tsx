@@ -14,10 +14,15 @@ import {
   Cell,
 } from "recharts";
 import { format, startOfWeek, addDays } from "date-fns";
+import { es, enUS } from "date-fns/locale";
 import { BarChart3 } from "lucide-react";
+import { useTranslation, useLanguage } from "@/lib/i18n";
 
 export function EnergyWeeklyChart() {
   const { energyLogs } = useEnergyStore();
+  const t = useTranslation();
+  const language = useLanguage();
+  const locales = { en: enUS, es: es };
 
   const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
@@ -41,7 +46,8 @@ export function EnergyWeeklyChart() {
         : 0;
 
     return {
-      day: format(day, "EEE"),
+      // Localized day name (Mon, Tue / Lun, Mar)
+      day: format(day, "EEE", { locale: locales[language] }),
       energy: avgEnergy,
       hasData: dayLogs.length > 0,
     };
@@ -53,6 +59,20 @@ export function EnergyWeeklyChart() {
     return "hsl(var(--chart-2))";
   };
 
+  const getLabelForValue = (value: number) => {
+      if (value === 3) return t.tasks.high;
+      if (value === 2) return t.energy.medShort;
+      if (value === 1) return t.tasks.low;
+      return "";
+  }
+
+  const getTooltipLabel = (value: number) => {
+    if (value === 0) return t.energy.noData;
+    if (value >= 2.5) return t.tasks.high;
+    if (value >= 1.5) return t.tasks.medium;
+    return t.tasks.low;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -63,7 +83,7 @@ export function EnergyWeeklyChart() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-primary" />
-            Weekly Energy Overview
+            {t.energy.weeklyOverview}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -73,7 +93,7 @@ export function EnergyWeeklyChart() {
         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
         <XAxis
           dataKey="day"
-          className="text-xs text-muted-foreground"
+          className="text-xs text-muted-foreground capitalize"
           tick={{ fill: "currentColor" }}
           axisLine={{ stroke: "hsl(var(--border))" }}
           tickLine={{ stroke: "hsl(var(--border))" }}
@@ -81,7 +101,7 @@ export function EnergyWeeklyChart() {
         <YAxis
           domain={[0, 3]}
           ticks={[0, 1, 2, 3]}
-          tickFormatter={(value) => (value === 3 ? "High" : value === 2 ? "Med" : value === 1 ? "Low" : "")}
+          tickFormatter={(value) => getLabelForValue(value)}
           className="text-xs text-muted-foreground"
           tick={{ fill: "currentColor" }}
           axisLine={{ stroke: "hsl(var(--border))" }}
@@ -94,11 +114,11 @@ export function EnergyWeeklyChart() {
             borderRadius: "8px",
             color: "hsl(var(--foreground))",
           }}
-          labelStyle={{ color: "hsl(var(--foreground))" }}
+          labelStyle={{ color: "hsl(var(--foreground))", textTransform: "capitalize" }}
           itemStyle={{ color: "hsl(var(--foreground))" }}
           formatter={(value: number) => [
-            value === 0 ? "No data" : value >= 2.5 ? "High" : value >= 1.5 ? "Medium" : "Low",
-            "Energy",
+            getTooltipLabel(value),
+            t.energy.energyLabel,
           ]}
         />
         <Bar dataKey="energy" radius={[8, 8, 0, 0]}>
