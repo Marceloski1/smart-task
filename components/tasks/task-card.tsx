@@ -25,7 +25,7 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
   const language = useLanguage()
   const {deleteTask , updateTask} = useTaskStore()
   const [dialogOpen, setDialogOpen] = useState(false)
-  
+  const {updateTaskStatus} = useTaskStore()
   const category = categories.find((c) => c.id === task.category_id)
 
   const getPriorityColor = (level?: string) => {
@@ -56,9 +56,9 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
 
   const handleStatusChange = async () => {
     if (task.status === "pending") {
-      await TaskService.updateStatus(task.id, "in_progress" )
+      await updateTaskStatus(task.id, "in_progress" )
     } else if (task.status === "in_progress") {
-      await TaskService.updateStatus(task.id, "completed") //, completed_at: new Date() 
+      await updateTaskStatus(task.id, "completed") //, completed_at: new Date() 
     }
   }
 
