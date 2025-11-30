@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { ProtectedLayout } from "@/components/layout/protected-layout"
 import { EnergyForm } from "@/components/energy/energy-form"
 import { EnergyHistory } from "@/components/energy/energy-history"
@@ -9,9 +9,13 @@ import { EnergyWeeklyChart } from "@/components/energy/energy-weekly-chart"
 import { useEnergyStore } from "@/lib/store/for-service/energy.store"
 
 export default function EnergyPage() {
+  const hasLoaded = useRef(false);
   const fetchEnergyLogs = useEnergyStore((state) => state.fetchEnergyLogs)
 
   useEffect(() => {
+    if (hasLoaded.current) return;
+    
+    hasLoaded.current = true;
     fetchEnergyLogs()
   }, [fetchEnergyLogs])
   return (

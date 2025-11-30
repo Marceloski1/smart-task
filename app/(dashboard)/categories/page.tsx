@@ -3,7 +3,7 @@ import CategoriesForm from "@/components/categories/category-dialog"
 import { ProtectedLayout } from "@/components/layout/protected-layout"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {Category} from "./../../../lib/types"
 import {AnimatePresence, motion} from "framer-motion"
 import CategoryCard from "@/components/categories/category-card"
@@ -12,7 +12,6 @@ import { useCategoryStore } from "@/lib/store/category-store"
 import { useTranslation } from "@/lib/i18n"
 
 export default function CategoriesPage() {
-  //const [categories , setCategories] = useState<Category[]>([])
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingCategory, setEditingCategory] = useState<Category | null>(null)
   const {fetchCategories , categories} = useCategoryStore()

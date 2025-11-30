@@ -14,7 +14,7 @@ export async function getCategories(skip = 0, limit = 100) {
 }
 
 export async function getCategory(id: string) {
-  const res = await api.get(`/categories/${id}`);
+  const res = await api.get(`/categories/${id}/`);
   return res.data;
 }
 
@@ -27,12 +27,12 @@ export async function createCategory(data: {
 }
 
 export async function updateCategory(id: string, data: any) {
-  const res = await api.put(`/categories/${id}`, data);
+  const res = await api.put(`/categories/${id}/`, data);
   return res.data;
 }
 
 export async function deleteCategory(id: string) {
-  const res = await api.delete(`/categories/${id}`);
+  const res = await api.delete(`/categories/${id}/`);
   return res.data;
 }
 

@@ -53,20 +53,22 @@ export function EnergyHistory() {
                 className="flex flex-col gap-2 rounded-lg border border-border bg-card p-4"
               >
                 <div className="flex items-center justify-between">
-                  <Badge variant="outline" className={getEnergyColor(log.energy_level)}>
-                    {/* Translating "High" + "Energy" */}
-                    {getTranslatedValue(log.energy_level, language)} {t.energy.energyLabel.toLowerCase()}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className={getEnergyColor(log.energy_level)}>
+                      {/* Translating "High" + "Energy" */}
+                      {getTranslatedValue(log.energy_level, language)} {t.energy.energyLabel.toLowerCase()}
+                    </Badge>
+                    {log.mood && (
+                        <Badge variant="secondary" className="w-fit">
+                            {log.mood}
+                        </Badge>
+                    )}
+                  </div>
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Calendar className="h-3 w-3" />
                     {format(log.logged_at, "MMM d, yyyy - h:mm a", { locale: locales[language] })}
                   </span>
                 </div>
-                {log.mood && (
-                    <p className="text-sm font-medium text-foreground">
-                        {t.energy.mood}: {log.mood}
-                    </p>
-                )}
                 {log.notes && <p className="text-sm text-muted-foreground leading-relaxed">{log.notes}</p>}
               </motion.div>
             ))}

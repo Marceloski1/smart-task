@@ -24,10 +24,8 @@ export const useCategoryStore = create<CategoryState>((set, get) => ({
 
   fetchCategories: async (skip = 0, limit = 100) => {
     try {
-      // Use client-side axios so the browser sends HttpOnly cookies automatically (withCredentials: true)
-      const res = await api.get('/categories', { params: { skip, limit } })
-      const data = res.data
-      const categories = Array.isArray(data) ? data : data?.categories ?? []
+      const res = await getCategories(skip, limit)
+      const categories = Array.isArray(res) ? res : res?.categories ?? []
       set({ categories })
       return categories
     } catch (err) {

@@ -1,47 +1,144 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { useTaskStore } from "@/lib/store/for-service/task.store"
-import { useRecommendationStore } from "@/lib/store/for-service/recommendation.store"
-import { Sparkles, CheckCircle2, X } from "lucide-react"
-import { useTranslation } from "@/lib/i18n"
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useTaskStore } from "@/lib/store/for-service/task.store";
+import { useMLTasksStore } from "@/lib/store/for-service/mltask.store";
+import { RecommendationCard } from "@/components/recommendations/recommendation-card"
+import { Sparkles, CheckCircle2, X } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
+import { useEffect, useState } from "react";
+
+interface TaskRecommendation {
+  id: string;
+  task_id: string;
+  status: "pending" | "accepted" | "rejected";
+  confidence_score: number;
+  recommendation_date: Date;
+  recommendation_reason: string;
+  was_completed: boolean;
+}
 
 export function AIRecommendation() {
-  const recommendations = useRecommendationStore((state) => state.recommendations)
-  const updateRecommendationAction = useRecommendationStore((state) => state.updateRecommendation)
-  const tasks = useTaskStore((state) => state.tasks)
-  const updateTaskAction = useTaskStore((state) => state.updateTask)
+  const fetchPrioritizedTasks = useMLTasksStore(
+    (state) => state.fetchPrioritizedTasks
+  );
+  const mlTasks = useMLTasksStore((state) => state.mlTasks);
+  const sendFeedback = useMLTasksStore((state) => state.sendFeedback);
 
-  const dailyRecommendation = recommendations.find((r) => r.status === "pending") || null
-  const t = useTranslation()
+  const tasks = useTaskStore((state) => state.tasks);
+  const fetchTasks = useTaskStore((state) => state.fetchTasks);
+  const updateTaskStatus = useTaskStore((state) => state.updateTaskStatus);
 
-  if (!dailyRecommendation || dailyRecommendation.status !== "pending") {
-    return null
-  }
+  // Estado local para manejar las recomendaciones
+  const [recommendations, setRecommendations] = useState<TaskRecommendation[]>(
+    []
+  );
+  const [loading, setLoading] = useState(false);
 
-  const recommendedTask = tasks.find((t) => t.id === dailyRecommendation.task_id)
-
-  if (!recommendedTask) {
-    return null
-  }
-
-  const handleAccept = () => {
-    if (dailyRecommendation && recommendedTask) {
-      updateRecommendationAction(dailyRecommendation.id, { status: "accepted" })
-      updateTaskAction(recommendedTask.id, { status: "in_progress" })
+  // Transformar mlTasks a recommendations cuando se cargan los datos
+  useEffect(() => {
+    if (mlTasks.length > 0) {
+      const newRecommendations = mlTasks.map((task, index) => ({
+        id: `rec-${task.id}`,
+        task_id: task.id,
+        status: index === 0 ? ("pending" as const) : ("accepted" as const),
+        confidence_score: task.priority_score,
+        recommendation_date: task.recommendation_date || new Date(),
+        recommendation_reason: generateRecommendationReason(task),
+        was_completed: task.was_completed || false,
+      }));
+      setRecommendations(newRecommendations);
     }
-  }
+  }, [mlTasks]);
 
-  const handleReject = () => {
-    if (dailyRecommendation) {
-      updateRecommendationAction(dailyRecommendation.id, { status: "rejected" })
+  const generateRecommendationReason = (task: any): string => {
+    const reasons = [
+      "Esta tarea coincide con tu nivel de energía actual y plazos próximos.",
+      "Basado en tu historial de productividad, esta tarea es ideal para este momento.",
+      "Esta tarea tiene alta prioridad y se alinea con tus objetivos a largo plazo.",
+      "Considerando tu carga de trabajo actual, esta tarea es la más adecuada.",
+      "El algoritmo ha identificado esta tarea como la que mejor se adapta a tu rutina.",
+    ];
+    return reasons[Math.floor(Math.random() * reasons.length)];
+  };
+
+  const pendingRecommendation = recommendations.find(
+    (r) => r.status === "pending"
+  );
+  const recommendedTask = pendingRecommendation
+    ? tasks.find((t) => t.id === pendingRecommendation.task_id)
+    : null;
+
+  const handleAccept = async () => {
+    if (pendingRecommendation && recommendedTask) {
+      setLoading(true);
+      try {
+        // 1. Actualizar estado de la tarea a "completed"
+        await updateTaskStatus(pendingRecommendation.task_id, "completed");
+
+        // 2. Enviar feedback positivo al modelo ML
+        await sendFeedback(pendingRecommendation.task_id, {
+          feedback_type: "completion",
+          was_useful: true,
+          actual_completion_time: recommendedTask.estimated_duration || 60,
+        });
+
+        // 3. Actualizar estado local
+        setRecommendations((prev) =>
+          prev.map((rec) =>
+            rec.id === pendingRecommendation.id
+              ? { ...rec, status: "accepted", was_completed: true }
+              : rec
+          )
+        );
+
+        // 4. Recargar datos
+        await fetchPrioritizedTasks();
+        await fetchTasks();
+      } catch (err) {
+        console.error("Error al aceptar recomendación:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
+  };
 
-  const confidencePercentage = Math.round(dailyRecommendation.confidence_score * 100)
+  const handleReject = async () => {
+    if (pendingRecommendation) {
+      setLoading(true);
+      try {
+        // 1. Actualizar estado de la tarea a "completed"
+        await updateTaskStatus(pendingRecommendation.task_id, "completed");
+
+        // 2. Enviar feedback negativo al modelo ML
+        await sendFeedback(pendingRecommendation.task_id, {
+          feedback_type: "rejection",
+          was_useful: false,
+          actual_priority: "high", // Según el script, se envía "high" cuando se rechaza
+        });
+
+        // 3. Actualizar estado local
+        setRecommendations((prev) =>
+          prev.map((rec) =>
+            rec.id === pendingRecommendation.id
+              ? { ...rec, status: "rejected" }
+              : rec
+          )
+        );
+
+        // 4. Recargar datos
+        await fetchPrioritizedTasks();
+        await fetchTasks();
+      } catch (err) {
+        console.error("Error al rechazar recomendación:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -49,45 +146,15 @@ export function AIRecommendation() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.4 }}
     >
-      <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            {t.dashboard.dailyRecommendation}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="rounded-lg border border-border bg-card p-4">
-            <div className="flex items-start justify-between gap-2">
-              <h4 className="text-lg font-semibold leading-relaxed">{recommendedTask.title}</h4>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
-                {confidencePercentage}% {t.dashboard.confidence}
-              </Badge>
-            </div>
-            {recommendedTask.description && (
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{recommendedTask.description}</p>
-            )}
-          </div>
-
-          <div className="rounded-lg bg-muted/50 p-4">
-            <p className="text-sm font-medium text-foreground">{t.dashboard.aiSuggests}</p>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              {dailyRecommendation.recommendation_reason}
-            </p>
-          </div>
-
-          <div className="flex gap-2">
-            <Button onClick={handleAccept} className="flex-1">
-              <CheckCircle2 className="mr-2 h-4 w-4" />
-              {t.recommendations.accept}
-            </Button>
-            <Button onClick={handleReject} variant="outline" className="flex-1 bg-transparent">
-              <X className="mr-2 h-4 w-4" />
-              {t.recommendations.reject}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {pendingRecommendation && recommendedTask && (
+        <RecommendationCard
+          recommendation={pendingRecommendation}
+          task={recommendedTask}
+          onAccept={handleAccept}
+          onReject={handleReject}
+          loading={loading}
+        />
+      )}
     </motion.div>
-  )
+  );
 }
