@@ -1,15 +1,6 @@
 name = "smart-task"
 compatibility_date = "2024-11-21"
-
-# Directorio donde se genera la build de OpenNext/Next.js
 pages_build_output_dir = ".vercel/output/static"
 
-# Habilita compatibilidad con Node.js
 [experimental]
 nodejs_compat = true
-
-# Bindings para R2: almacenamiento de cache incremental
-[[r2_buckets]]
-binding = "NEXT_INC_CACHE_R2_BUCKET"        # Nombre que tu código usa
-#bucket_name = "nombre-de-tu-bucket-r2" 
-#preview_bucket_name = "nombre-preview-bucket-r2"

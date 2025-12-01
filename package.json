@@ -75,7 +75,6 @@
     "zustand": "latest"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.14.0",
     "@tailwindcss/postcss": "^4.1.9",
     "@types/cookie-parser": "^1.4.10",
     "@types/node": "^22",
