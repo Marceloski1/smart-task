@@ -74,7 +74,7 @@ export function LoginForm() {
                 required
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-2">
               <Label htmlFor="password">{t.auth.password}</Label>
               <div className="relative">
                 <Input
@@ -103,11 +103,6 @@ export function LoginForm() {
                   </span>
                 </Button>
               </div>
-            </div>
-            <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground m-2">
-              <p className="font-medium text-foreground">Demo credentials:</p>
-              <p>Email: demo@smarttask.com</p>
-              <p>Password: demo</p>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
