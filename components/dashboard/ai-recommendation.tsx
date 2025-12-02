@@ -55,13 +55,8 @@ export function AIRecommendation() {
   }, [mlTasks]);
 
   const generateRecommendationReason = (task: any): string => {
-    const reasons = [
-      "Esta tarea coincide con tu nivel de energía actual y plazos próximos.",
-      "Basado en tu historial de productividad, esta tarea es ideal para este momento.",
-      "Esta tarea tiene alta prioridad y se alinea con tus objetivos a largo plazo.",
-      "Considerando tu carga de trabajo actual, esta tarea es la más adecuada.",
-      "El algoritmo ha identificado esta tarea como la que mejor se adapta a tu rutina.",
-    ];
+    const t = useTranslation();
+    const reasons = t.recommendations.recommendationReasons;
     return reasons[Math.floor(Math.random() * reasons.length)];
   };
 

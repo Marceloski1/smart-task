@@ -17,7 +17,7 @@ export default function TasksPage() {
   const fetchTasks = useTaskStore((state) => state.fetchTasks)
   const t = useTranslation()
 
-  const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">("all")
+  const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">("pending")
   const [selectedPriority, setSelectedPriority] = useState<PriorityLevel | "all">("all")
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)

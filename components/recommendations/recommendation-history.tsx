@@ -45,7 +45,7 @@ export function RecommendationHistory({ items }: RecommendationHistoryProps) {
       </CardHeader>
       <CardContent>
         {items.length === 0 ? (
-          <p className="text-center text-sm text-muted-foreground py-8">No recommendation history yet</p>
+          <p className="text-center text-sm text-muted-foreground py-8">{t.noHistoryYet}</p>
         ) : (
           <div className="space-y-3">
             {items.map((item) => (

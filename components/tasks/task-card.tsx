@@ -4,14 +4,15 @@ import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import type { Task } from "@/lib/types"
 import { format } from "date-fns"
 import { Clock, Edit, Trash2, CheckCircle2, PlayCircle , FileWarning } from "lucide-react"
-import { useStore } from "@/lib/store"
+import { useCategoryStore } from "@/lib/store/for-service/categories.store"
 import { useTranslation, getTranslatedValue, useLanguage } from "@/lib/i18n"
 import { TaskService } from "@/service/task.service"
 import { useTaskStore } from "@/lib/store/for-service/task.store"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { TaskInformation } from "./task-information"
 
 interface TaskCardProps {
@@ -20,13 +21,11 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onEdit }: TaskCardProps) {
-  const { categories } = useStore()
   const t = useTranslation()
   const language = useLanguage()
   const {deleteTask , updateTask} = useTaskStore()
   const [dialogOpen, setDialogOpen] = useState(false)
   const {updateTaskStatus} = useTaskStore()
-  const category = categories.find((c) => c.id === task.category_id)
 
   const getPriorityColor = (level?: string) => {
     switch (level) {
@@ -125,18 +124,16 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
                 </Badge>
               )}
 
-              {category ? (
-                <Badge
-                  variant="outline"
-                  style={{
-                    backgroundColor: `${category.color}10`,
-                    color: category.color,
-                    borderColor: `${category.color}40`,
-                  }}
-                >
-                  {category.name}
-                </Badge>
-              ) :   <FileWarning className="h-5 w-5 text-amber-300" />}
+              {!task.category_id && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <FileWarning className="h-5 w-5 text-amber-300" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t.tasks.noCategory}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </div>
 
             <div className="flex items-center justify-between text-xs text-muted-foreground">

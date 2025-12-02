@@ -92,7 +92,7 @@ export function AppHeader() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
                 <span>{t.nav.profile}</span>
               </DropdownMenuItem>
@@ -100,7 +100,7 @@ export function AppHeader() {
                 <Settings className="mr-2 h-4 w-4" />
                 <span>{t.nav.settings}</span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator /> */}
               <DropdownMenuItem onClick={handleLogout} className="text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>{t.nav.logout}</span>

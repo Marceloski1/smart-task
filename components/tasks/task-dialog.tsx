@@ -32,6 +32,9 @@ import { fetchCategories } from "@/service/category.service";
 import { format } from "date-fns";
 import { useTranslation, getTranslatedValue, useLanguage } from "@/lib/i18n";
 import { useTaskStore } from "./../../lib/store/for-service/task.store";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface TaskDialogProps {
   open: boolean;
@@ -45,6 +48,7 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
   const language = useLanguage();
   const { getTask, updateTask, createTask } = useTaskStore();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [error, setError] = useState<string>("");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -112,7 +116,27 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title.trim()) return;
+    if (!formData.title.trim()) {
+      setError("Title is required.");
+      return;
+    }
+
+    if (!formData.category_id.trim()) {
+      setError("Category is required.");
+      return;
+    }
+
+    if (!formData.estimated_duration.trim()) {
+      setError("Estimated time is required.");
+      return;
+    }
+
+    if (!formData.deadline.trim()) {
+      setError("Deadline is required.");
+      return;
+    }
+
+    setError("");
 
     const { score, level } = calculatePriority();
 
@@ -170,7 +194,6 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
                   setFormData({ ...formData, title: e.target.value })
                 }
                 placeholder={t.tasks.taskTitlePlaceholder}
-                required
               />
             </div>
 
@@ -337,7 +360,7 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
                       estimated_duration: e.target.value,
                     })
                   }
-                  placeholder={t.tasks.timeInHoursPlaceholder}
+                  placeholder={t.tasks.timeInMinPlaceholder}
                   min="1"
                 />
               </div>
@@ -355,6 +378,12 @@ export function TaskDialog({ open, onClose, task }: TaskDialogProps) {
               </div>
             </div>
 
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
             <div className="rounded-lg bg-muted p-3 text-sm">
               <p className="font-medium text-foreground">
                 {t.tasks.aiPriorityCalculation}

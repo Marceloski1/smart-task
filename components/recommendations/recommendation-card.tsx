@@ -105,6 +105,9 @@ export function RecommendationCard({
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               {recommendation.recommendation_reason}
             </p>
+            <p className="mt-2 text-xs text-muted-foreground italic">
+              {t.approvalNote}
+            </p>
           </div>
 
           {recommendation.status === "pending" && (
@@ -115,7 +118,7 @@ export function RecommendationCard({
               disabled={loading}
             >
               <CheckCircle2 className="mr-2 h-4 w-4" />
-              {loading ? "Processing..." : "Accept"}
+              {loading ? "Processing..." : t.accepted}
             </Button>
             <Button
               onClick={onReject}

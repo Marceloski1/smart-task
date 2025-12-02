@@ -3,20 +3,21 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useStore } from "@/lib/store"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { 
-  LayoutDashboard, 
-  CheckSquare, 
-  Battery, 
-  Sparkles, 
-  X, 
-  Clipboard, 
-  InboxIcon, 
+import {
+  LayoutDashboard,
+  CheckSquare,
+  Battery,
+  Sparkles,
+  X,
+  Clipboard,
+  InboxIcon,
   FileStack,
   Wrench, // Icon for Tools
-  ChevronDown 
+  ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslation } from "@/lib/i18n"
@@ -25,7 +26,8 @@ export function AppSidebar() {
   const { sidebarOpen, setSidebarOpen } = useStore()
   const pathname = usePathname()
   const t = useTranslation()
-  
+  const isMobile = useIsMobile()
+
   // State for the dropdown
   const [isToolsOpen, setIsToolsOpen] = React.useState(false)
 
@@ -35,6 +37,13 @@ export function AppSidebar() {
       setIsToolsOpen(true)
     }
   }, [pathname])
+
+  // Auto-open sidebar on desktop or when transitioning to desktop
+  React.useEffect(() => {
+    if (!isMobile) {
+      setSidebarOpen(true)
+    }
+  }, [isMobile, setSidebarOpen])
 
   const mainNavigation = [
     { name: t.nav.dashboard, href: "/dashboard", icon: LayoutDashboard },
@@ -66,15 +75,18 @@ export function AppSidebar() {
 
       {/* Sidebar */}
       <AnimatePresence mode="wait">
-        {sidebarOpen && (
+        {(sidebarOpen || !isMobile) && (
           <motion.aside
-            initial={{ x: -280 }}
+            initial={{ x: isMobile ? -280 : 0 }}
             animate={{ x: 0 }}
-            exit={{ x: -280 }}
+            exit={{ x: isMobile ? -280 : 0 }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-border bg-card md:sticky md:top-16 md:h-[calc(100vh-4rem)]"
+            className={cn(
+              "flex h-full w-64 flex-col border-r border-border bg-card",
+              isMobile ? "fixed left-0 top-0 z-50" : "sticky top-16 h-[calc(100vh-4rem)]"
+            )}
           >
-            <div className="flex h-16 items-center justify-between border-b border-border px-4 sm:hidden">
+            <div className="flex h-16 items-center justify-between border-b border-border px-4 md:hidden">
               <h2 className="text-lg font-semibold">{t.sidebar.menu}</h2>
               <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
                 <X className="h-5 w-5" />

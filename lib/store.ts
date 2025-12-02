@@ -58,7 +58,7 @@ export const useStore = create<AppState>((set) => ({
   energyLogs: [],
   dailyRecommendation: null,
   theme: "light",
-  sidebarOpen: true,
+  sidebarOpen: false,
   language: "en",
 
   // User actions
