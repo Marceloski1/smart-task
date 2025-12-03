@@ -2,6 +2,21 @@
 
 **SmartTask** es un sistema de gestión de tareas inteligente, potenciado por IA, diseñado para ayudarte a priorizar y completar tus tareas de forma eficiente según tus niveles de energía y plazos de vencimiento.
 
+## Integrantes del equipo
+
+* Daryll Lorenzo Alfonso - [https://github.com/DaryllLorenzo](https://github.com/DaryllLorenzo)
+* Roberto José Martínez Barrios - [https://github.com/AzerXP](https://github.com/AzerXP)
+* Eduardo Marcelo Mazzola Fernández - [https://github.com/Marceloski1](https://github.com/Marceloski1)
+* Carlos Miguel Piedra Álvarez - [https://github.com/cStoneDev](https://github.com/cStoneDev)
+* Andy Clemente Gago - [https://github.com/AndyCG03](https://github.com/AndyCG03)
+
+## Objetivo y visión
+Muelita sobre de lo que es la app guiarnos por el textico de arriba mas potente
+
+## Documentación más detallada de todo lo desarrollado por el equipo
+
+Visitar repositorio: [https://github.com/Marceloski1/smart-task-avancode-documentation](https://github.com/Marceloski1/smart-task-avancode-documentation)
+
 ## ✨ Características
 
 - 🤖 **Priorización inteligente de tareas** usando algoritmos de IA
@@ -142,16 +157,17 @@ smart-task/
 La aplicación actualmente utiliza datos simulados locales almacenados en `lib/mock-data.ts`. La estructura de datos está diseñada para coincidir fácilmente con el esquema del backend planificado (PostgreSQL + Redis) para una integración futura sin cambios mayores. 
 .......Redis por definir
 
-## 🔌 Integración Futura del Backend
+## 🔌 Integración con servicios
 
-Este frontend está preparado para integrarse con un backend **FastAPI** usando:
+### Backend
+Esta aplicación consume de una api desarrollada sobre el framework fastapi de python, api documentada en el siguiente repositorio: [https://github.com/AndyCG03/backend-smart-task](https://github.com/AndyCG03/backend-smart-task) y publicada utilizando los servicios de onrender en ARREGLAR URL ---->>>>> [https://backend-smart.onrender.com/docs](https://backend-smart.onrender.com/docs)
 
-- **PostgreSQL**: para almacenamiento de datos relacional (usuarios, tareas, energía, etc.)
-- **Redis**: para caché y gestión de sesiones ......Por definir
-- **API RESTful**: endpoints JSON para todas las operaciones
-- **Autenticación JWT**: para sesiones seguras
+### Servicio de resumidor (Pipeline de Scikit-learn)
+Esta aplicación consume de un servicio de resumidor extractivo, el cual fue desarrollado a modo de pipeline con base de scikit-learn y técnicas de procesamiento de lenguaje natural, el procedimiento está documentado en el siguiente repositorio: [https://github.com/DaryllLorenzo/Pipeline-de-Resumen](https://github.com/DaryllLorenzo/Pipeline-de-Resumen). Se consume este servicio a través de una api desarrollada sobre el framework fastapi, y fue publicada utilizando los servicios de onrender en [https://pipeline-resumen-fast-api.onrender.com/docs](https://pipeline-resumen-fast-api.onrender.com/docs)
 
-La estructura de datos en `lib/mock-data.ts` y `lib/types.ts` coincide con el esquema de base de datos planificado, facilitando la transición a backend real.
+### Servicio de detección de elementos en diagramas de casos de uso
+Esta aplicación consume de un serivicio de detección de elementos en diagramas de casos de uso de sistemas. Se basa en un pipeline de utilizando bibliotecas populares para el trabajo con visión de computadora OpenCV y detección de textos en imágenes con easyocr. La documentación y el proyecto se encuentra en el repositorio: [https://github.com/DaryllLorenzo/Pipeline-OpenCV-OCR](https://github.com/DaryllLorenzo/Pipeline-OpenCV-OCR). Se consume este servicio a través de una api desarrollada sobre el framework fastapi, y fue publicada utilizando los servicios de onrender en [https://pipeline-opencv-ocr-fast-api.onrender.com/docs](https://pipeline-opencv-ocr-fast-api.onrender.com/docs)
+
 
 ## 🚀 Despliegue
 
