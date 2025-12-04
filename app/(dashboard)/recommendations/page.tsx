@@ -23,6 +23,8 @@ interface TaskRecommendation {
 
 export default function RecommendationsPage() {
   const fetchPrioritizedTasks = useMLTasksStore((state) => state.fetchPrioritizedTasks)
+  const fetchFeedback = useMLTasksStore((state) => state.fetchFeedback)
+  const feedback = useMLTasksStore((state) => state.mlHistory)
   const mlTasks = useMLTasksStore((state) => state.mlTasks)
   const sendFeedback = useMLTasksStore((state) => state.sendFeedback)
   const t = useTranslation() ; 
@@ -37,7 +39,8 @@ export default function RecommendationsPage() {
   useEffect(() => {
     fetchPrioritizedTasks()
     fetchTasks()
-  }, [fetchPrioritizedTasks, fetchTasks])
+    fetchFeedback()
+  }, [fetchPrioritizedTasks, fetchTasks, fetchFeedback])
 
   // Transformar mlTasks a recommendations cuando se cargan los datos
   useEffect(() => {
@@ -78,13 +81,7 @@ export default function RecommendationsPage() {
         })
         
         // 3. Actualizar estado local
-        setRecommendations(prev => 
-          prev.map(rec => 
-            rec.id === pendingRecommendation.id 
-              ? { ...rec, status: "accepted", was_completed: true } 
-              : rec
-          )
-        )
+        await fetchFeedback()
 
         // 4. Recargar datos
         await fetchPrioritizedTasks()
@@ -113,13 +110,7 @@ export default function RecommendationsPage() {
         })
         
         // 3. Actualizar estado local
-        setRecommendations(prev => 
-          prev.map(rec => 
-            rec.id === pendingRecommendation.id 
-              ? { ...rec, status: "rejected" } 
-              : rec
-          )
-        )
+        await fetchFeedback()
 
         // 4. Recargar datos
         await fetchPrioritizedTasks()
@@ -136,10 +127,10 @@ export default function RecommendationsPage() {
   const rawHistoryItems = recommendations.filter((r) => r.status !== "pending")
 
   const totalRecommendations = recommendations.length
-  const acceptedCount = rawHistoryItems.filter((i) => i.status === "accepted").length
-  const rejectedCount = rawHistoryItems.filter((i) => i.status === "rejected").length
-  const completedCount = rawHistoryItems.filter((i) => i.was_completed).length
-  const completionRate = acceptedCount > 0 ? (completedCount / acceptedCount) * 100 : 0
+  const acceptedCount = feedback.filter((i) => i === true).length
+  const rejectedCount = feedback.filter((i) => i === false).length
+  const completedCount = feedback.length
+  const completionRate = acceptedCount > 0 ? (acceptedCount / completedCount) * 100 : 0
 
   const historyItems = rawHistoryItems.map((r) => {
     const task = tasks.find((t) => t.id === r.task_id)

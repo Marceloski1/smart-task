@@ -63,7 +63,7 @@ export function RecommendationHistory({ items }: RecommendationHistoryProps) {
                   </span>
                   <span className="flex items-center gap-1">
                     <TrendingUp className="h-3 w-3" />
-                    {Math.round(item.confidence * 100)}% {t.confidence}
+                    {Math.round(item.confidence)}% {t.confidence}
                   </span>
                   {item.wasCompleted !== undefined && (
                     <span className={item.wasCompleted ? "text-green-600 dark:text-green-400" : ""}>

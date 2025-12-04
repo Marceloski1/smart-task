@@ -200,14 +200,17 @@ export const translations = {
       completed: "Completed",
       notCompleted: "Not completed",
       factors: {
-        "priorityScoreTitle": "Priority Score",
-        "priorityScoreDesc": "Tasks with higher urgency and impact are prioritized",
-        "energyMatchTitle": "Energy Match",
-        "energyMatchDesc": "Tasks are matched to your current energy levels",
-        "completionHistoryTitle": "Completion History",
-        "completionHistoryDesc": "Your past completion patterns influence recommendations",
-        "deadlineProximityTitle": "Deadline Proximity",
-        "deadlineProximityDesc": "Upcoming deadlines are factored into the decision"
+        priorityScoreTitle: "Priority Score",
+        priorityScoreDesc:
+          "Tasks with higher urgency and impact are prioritized",
+        energyMatchTitle: "Energy Match",
+        energyMatchDesc: "Tasks are matched to your current energy levels",
+        completionHistoryTitle: "Completion History",
+        completionHistoryDesc:
+          "Your past completion patterns influence recommendations",
+        deadlineProximityTitle: "Deadline Proximity",
+        deadlineProximityDesc:
+          "Upcoming deadlines are factored into the decision",
       },
       pendingRecoments: "Recomendation Pending",
       recommendationReasons: [
@@ -217,7 +220,8 @@ export const translations = {
         "Considering your current workload, this task is the most suitable.",
         "The algorithm has identified this task as the best fit for your routine.",
       ],
-      approvalNote: "By approving or rejecting a recommendation, the recommended task will be completed.",
+      approvalNote:
+        "By approving or rejecting a recommendation, the recommended task will be completed.",
     },
 
     // Settings
@@ -280,7 +284,8 @@ export const translations = {
       srOnlyEditCategory: "Edit category",
       srOnlyDeleteCategory: "Delete category",
       deleteConfirm: "Are you sure you want to delete this category?",
-      deleteConfirmDescription: "This action cannot be undone. This will permanently delete the category and remove it from all associated tasks.",
+      deleteConfirmDescription:
+        "This action cannot be undone. This will permanently delete the category and remove it from all associated tasks.",
       pageTitle: "Categories",
       pageDescription: "Manage all your categories for clasify your tasks",
       emptyStateTitle: "You don´t have categories",
@@ -299,7 +304,8 @@ export const translations = {
       title: "Use Cases",
       subtitle: "Process images to generate PDF reports for use cases.",
       uploadTitle: "Upload Image",
-      uploadDesc: "Upload an image to generate a PDF report. Supported formats: JPG, PNG.",
+      uploadDesc:
+        "Upload an image to generate a PDF report. Supported formats: JPG, PNG.",
       descriptionLabel: "Description (Optional)",
       descriptionPlaceholder: "Enter description...",
       selectedFile: "Selected",
@@ -311,6 +317,16 @@ export const translations = {
       downloadButton: "Download PDF",
       clearButton: "Clear",
       emptyState: "PDF will appear here after processing",
+      debugMode: "Debug mode (includes diagnostic images)",
+      acceptedTypes: "Accepted types: PNG, JPG, JPEG, BMP, TIFF, WEBP",
+      errorTips: "Make sure the image is clear and contains legible text.",
+      pdfIncludes: "The PDF includes:",
+      pdfIncludesList1: "Date and time of processing",
+      pdfIncludesList2: "Total count of detected actors",
+      pdfIncludesList3: "Organized table of actors with ID and name",
+      pdfIncludesList4: "Processed image with annotations",
+      emptyStateDetailed:
+        "Upload an image with diagrams or text to automatically detect actors.",
     },
     fileDropzone: {
       title: "Choose files or drag & drop",
@@ -511,26 +527,31 @@ export const translations = {
       recommendationHistory: "Posibles de Recomendaciones",
       noHistoryYet: "No hay recomendaciones pendientes",
       completed: "Completada",
-      notCompleted: "No completada", 
+      notCompleted: "No completada",
       factors: {
-      "priorityScoreTitle": "Puntuación de Prioridad",
-      "priorityScoreDesc": "Las tareas con mayor urgencia e impacto son priorizadas",
-      "energyMatchTitle": "Coincidencia de Energía",
-      "energyMatchDesc": "Las tareas se adaptan a tus niveles de energía actuales",
-      "completionHistoryTitle": "Historial de Finalización",
-      "completionHistoryDesc": "Tus patrones de finalización pasados influyen en las recomendaciones",
-      "deadlineProximityTitle": "Proximidad de Plazo",
-      "deadlineProximityDesc": "Los plazos próximos se tienen en cuenta en la decisión"
-    },
-    pendingRecoments: "Recomendaciones Pendientes",
-    recommendationReasons: [
-      "Esta tarea coincide con tu nivel de energía actual y plazos próximos.",
-      "Basado en tu historial de productividad, esta tarea es ideal para este momento.",
-      "Esta tarea tiene alta prioridad y se alinea con tus objetivos a largo plazo.",
-      "Considerando tu carga de trabajo actual, esta tarea es la más adecuada.",
-      "El algoritmo ha identificado esta tarea como la que mejor se adapta a tu rutina.",
-    ],
-    approvalNote: "Al aprobar o rechazar una recomendación se completará la tarea recomendada.",
+        priorityScoreTitle: "Puntuación de Prioridad",
+        priorityScoreDesc:
+          "Las tareas con mayor urgencia e impacto son priorizadas",
+        energyMatchTitle: "Coincidencia de Energía",
+        energyMatchDesc:
+          "Las tareas se adaptan a tus niveles de energía actuales",
+        completionHistoryTitle: "Historial de Finalización",
+        completionHistoryDesc:
+          "Tus patrones de finalización pasados influyen en las recomendaciones",
+        deadlineProximityTitle: "Proximidad de Plazo",
+        deadlineProximityDesc:
+          "Los plazos próximos se tienen en cuenta en la decisión",
+      },
+      pendingRecoments: "Recomendaciones Pendientes",
+      recommendationReasons: [
+        "Esta tarea coincide con tu nivel de energía actual y plazos próximos.",
+        "Basado en tu historial de productividad, esta tarea es ideal para este momento.",
+        "Esta tarea tiene alta prioridad y se alinea con tus objetivos a largo plazo.",
+        "Considerando tu carga de trabajo actual, esta tarea es la más adecuada.",
+        "El algoritmo ha identificado esta tarea como la que mejor se adapta a tu rutina.",
+      ],
+      approvalNote:
+        "Al aprobar o rechazar una recomendación se completará la tarea recomendada.",
     },
 
     // Settings
@@ -594,7 +615,8 @@ export const translations = {
       srOnlyEditCategory: "Editar categoría",
       srOnlyDeleteCategory: "Eliminar categoría",
       deleteConfirm: "¿Estás seguro de que quieres eliminar esta categoría?",
-      deleteConfirmDescription: "Esta acción no se puede deshacer. Esto eliminará permanentemente la categoría y la quitará de todas las tareas asociadas.",
+      deleteConfirmDescription:
+        "Esta acción no se puede deshacer. Esto eliminará permanentemente la categoría y la quitará de todas las tareas asociadas.",
       pageTitle: "Categorías",
       pageDescription:
         "Administra todas tus categorías para clasificar tus tareas",
@@ -612,7 +634,8 @@ export const translations = {
       title: "Casos de Uso",
       subtitle: "Procesa imágenes para generar reportes PDF de casos de uso.",
       uploadTitle: "Subir Imagen",
-      uploadDesc: "Sube una imagen para generar un reporte PDF. Formatos soportados: JPG, PNG.",
+      uploadDesc:
+        "Sube una imagen para generar un reporte PDF. Formatos soportados: JPG, PNG.",
       descriptionLabel: "Descripción (Opcional)",
       descriptionPlaceholder: "Ingresa una descripción...",
       selectedFile: "Seleccionado",
@@ -624,10 +647,22 @@ export const translations = {
       downloadButton: "Descargar PDF",
       clearButton: "Limpiar",
       emptyState: "El PDF aparecerá aquí después del procesamiento",
+      debugMode: "Modo debug (incluye imágenes de diagnóstico)",
+      acceptedTypes: "Tipos aceptados: PNG, JPG, JPEG, BMP, TIFF, WEBP",
+      errorTips:
+        "Asegúrate de que la imagen sea clara y contenga texto legible.",
+      pdfIncludes: "El PDF incluye:",
+      pdfIncludesList1: "Fecha y hora de procesamiento",
+      pdfIncludesList2: "Conteo total de actores detectados",
+      pdfIncludesList3: "Tabla organizada de actores con ID y nombre",
+      pdfIncludesList4: "Imagen procesada con anotaciones",
+      emptyStateDetailed:
+        "Sube una imagen con diagramas o texto para detectar actores automáticamente.",
     },
     fileDropzone: {
       title: "Elige archivos o arrastra y suelta",
-      description: "Arrastra archivos aquí o haz clic para buscar en tu dispositivo",
+      description:
+        "Arrastra archivos aquí o haz clic para buscar en tu dispositivo",
       browseButton: "Explorar Archivos",
       attachedFiles: "Archivos Adjuntos",
       ready: "Listo",

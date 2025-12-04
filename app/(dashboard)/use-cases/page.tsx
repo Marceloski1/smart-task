@@ -26,10 +26,7 @@ export default function UseCasesPage() {
     if (!selectedFile) return
 
     const formData = new FormData()
-    // La API espera el campo "file", no "image"
     formData.append("file", selectedFile)
-    // Si tu API no usa descripción, puedes eliminarlo
-    // Si la API espera debug como campo del formData:
     formData.append("debug", debugMode.toString())
     formData.append("format", "pdf")
 
@@ -81,7 +78,7 @@ export default function UseCasesPage() {
                   className="rounded border-gray-300"
                 />
                 <Label htmlFor="debug-mode">
-                  Modo debug (incluye imágenes de diagnóstico)
+                  {t.useCases.debugMode}
                 </Label>
               </div>
 
@@ -96,7 +93,7 @@ export default function UseCasesPage() {
                   {t.useCases.selectedFile}: {selectedFile.name}
                   <br />
                   <span className="text-xs">
-                    Tipos aceptados: PNG, JPG, JPEG, BMP, TIFF, WEBP
+                    {t.useCases.acceptedTypes}
                   </span>
                 </div>
               )}
@@ -116,7 +113,7 @@ export default function UseCasesPage() {
                     Error: {error}
                     <br />
                     <span className="text-xs">
-                      Asegúrate de que la imagen sea clara y contenga texto legible.
+                      {t.useCases.errorTips}
                     </span>
                   </AlertDescription>
                 </Alert>
@@ -139,12 +136,12 @@ export default function UseCasesPage() {
                     {t.useCases.successMessage}
                     <br />
                     <span className="text-xs text-muted-foreground">
-                      El PDF incluye:
+                      {t.useCases.pdfIncludes}
                       <ul className="list-disc list-inside mt-1">
-                        <li>Fecha y hora de procesamiento</li>
-                        <li>Conteo total de actores detectados</li>
-                        <li>Tabla organizada de actores con ID y nombre</li>
-                        {debugMode && <li>Imagen procesada con anotaciones</li>}
+                        <li>{t.useCases.pdfIncludesList1}</li>
+                        <li>{t.useCases.pdfIncludesList2}</li>
+                        <li>{t.useCases.pdfIncludesList3}</li>
+                        {debugMode && <li>{t.useCases.pdfIncludesList4}</li>}
                       </ul>
                     </span>
                   </div>
@@ -160,7 +157,7 @@ export default function UseCasesPage() {
                 <div className="text-muted-foreground text-center py-8">
                   {t.useCases.emptyState}
                   <p className="text-sm mt-2">
-                    Sube una imagen con diagramas o texto para detectar actores automáticamente.
+                    {t.useCases.emptyStateDetailed}
                   </p>
                 </div>
               )}
