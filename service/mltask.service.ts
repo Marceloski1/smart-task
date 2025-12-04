@@ -52,3 +52,10 @@ export async function sendMLFeedback(taskId: string, data: {
   });
   return res.data;
 }
+
+export async function getFeedback(){
+  const res = await api.get(`/feedback/useful`, {
+    headers: authHeader(),
+  });
+  return res.data;
+}

@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import type { Task } from "@/lib/types";
-import { getPrioritizedTasks, sendMLFeedback } from "@/service/mltask.service";
+import { getPrioritizedTasks, sendMLFeedback, getFeedback } from "@/service/mltask.service";
 
 interface MLTask extends Task {
   priority_score: number;
@@ -12,11 +12,13 @@ interface MLTask extends Task {
 
 interface MLTasksState {
   mlTasks: MLTask[];
+  mlHistory: boolean[];
   loading: boolean;
   error: string | null;
 
   // Actions
   fetchPrioritizedTasks: (skip?: number, limit?: number) => Promise<void>;
+  fetchFeedback: () => Promise<void>;
   sendFeedback: (taskId: string, feedback: any) => Promise<void>;
 }
 
@@ -24,6 +26,7 @@ export const useMLTasksStore = create<MLTasksState>((set, get) => ({
   mlTasks: [],
   loading: false,
   error: null,
+  mlHistory: [],
 
   fetchPrioritizedTasks: async (skip = 0, limit = 100) => {
     set({ loading: true, error: null });
@@ -52,4 +55,14 @@ export const useMLTasksStore = create<MLTasksState>((set, get) => ({
       console.error(err);
     }
   },
+
+  fetchFeedback: async () => {
+    try{
+      const feedback = await getFeedback();
+      set({ mlHistory: feedback });
+    }catch (err: any) {
+      console.error(err);
+      set({ error: err.message || "Error loading feedback" });
+    }
+  }
 }));

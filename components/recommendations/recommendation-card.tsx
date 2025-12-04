@@ -127,7 +127,7 @@ export function RecommendationCard({
               disabled={loading}
             >
               <X className="mr-2 h-4 w-4" />
-              {loading ? t.accept : t.reject}
+              {t.reject}
             </Button>
           </div>
         )}

@@ -22,6 +22,7 @@ interface TaskRecommendation {
 }
 
 export function AIRecommendation() {
+  const t = useTranslation();
   const fetchPrioritizedTasks = useMLTasksStore(
     (state) => state.fetchPrioritizedTasks
   );
@@ -52,10 +53,9 @@ export function AIRecommendation() {
       }));
       setRecommendations(newRecommendations);
     }
-  }, [mlTasks]);
+  }, [mlTasks, t]);
 
   const generateRecommendationReason = (task: any): string => {
-    const t = useTranslation();
     const reasons = t.recommendations.recommendationReasons;
     return reasons[Math.floor(Math.random() * reasons.length)];
   };
